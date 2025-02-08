@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Корзина - Лавандовый рай</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --lavender-light: #E6E6FA;
+            --lavender-main: #9B7EDC;
+            --lavender-dark: #694FA8;
+            --lavender-text: #4A366C;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--lavender-text);
+            background-color: #f8f9fa;
+            padding-top: 80px;
+        }
+
+        .navbar {
+            background-color: rgba(107, 79, 168, 0.95) !important;
+        }
+
+        .cart-header {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+            .cart-item:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .cart-item img {
+                border-radius: 10px;
+                object-fit: cover;
+            }
+
+        .btn-lavender {
+            background-color: var(--lavender-main);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-lavender:hover {
+                background-color: var(--lavender-dark);
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 15px rgba(107, 79, 168, 0.3);
+            }
+
+        .btn-outline-lavender {
+            border: 2px solid var(--lavender-main);
+            color: var(--lavender-main);
+            background-color: transparent;
+            padding: 12px 30px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-lavender:hover {
+                background-color: var(--lavender-main);
+                color: white;
+            }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid #dee2e6;
+            border-radius: 25px;
+            padding: 5px;
+        }
+
+            .quantity-control button {
+                border: none;
+                background: none;
+                color: var(--lavender-main);
+                padding: 0 10px;
+                font-size: 1.2rem;
+            }
+
+            .quantity-control input {
+                border: none;
+                width: 50px;
+                text-align: center;
+                background: transparent;
+            }
+
+                .quantity-control input:focus {
+                    outline: none;
+                }
+
+        .cart-summary {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .remove-item {
+            color: #dc3545;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .remove-item:hover {
+                color: #c82333;
+            }
+
+        footer {
+            background-color: var(--lavender-dark);
+            color: white;
+        }
+    </style>
+
+    <link rel="stylesheet" href="style.css">
+
+
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-spa me-2"></i>Лавандовый рай
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#catalog">
+                            <i class="fas fa-flask"></i>
+                            Масла
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">
+                            <i class="fas fa-leaf"></i>
+                            О лаванде
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacts">
+                            <i class="fas fa-envelope"></i>
+                            Контакты
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-shopping-cart"></i>
+                            Корзина
+                        </a>
+                    </li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline-light">Войти</a>
+                    <a href="register.html" class="btn btn-light">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="container my-5">
+        <div class="cart-header p-4">
+            <h1 class="mb-0"><i class="fas fa-shopping-cart me-3"></i>Корзина</h1>
+        </div>
+
+        <div class="row">
+            <!-- Список товаров -->
+            <div class="col-lg-8">
+                <!-- Товар 1 -->
+                <div class="cart-item p-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <img src="/api/placeholder/150/150" class="img-fluid" alt="Эфирное масло">
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="mb-1">Эфирное масло лаванды</h5>
+                            <p class="text-muted mb-0">100% натуральное, 10мл</p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="quantity-control">
+                                <button>-</button>
+                                <input type="number" value="1" min="1">
+                                <button>+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="fw-bold">₽ 1 200</span>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="remove-item"><i class="fas fa-times"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 2 -->
+                <div class="cart-item p-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <img src="/api/placeholder/150/150" class="img-fluid" alt="Масло для массажа">
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="mb-1">Массажное масло</h5>
+                            <p class="text-muted mb-0">С лавандой, 100мл</p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="quantity-control">
+                                <button>-</button>
+                                <input type="number" value="1" min="1">
+                                <button>+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="fw-bold">₽ 1 500</span>
+                        </div>
+                        <div class="col-md-1">
+                            <span class="remove-item"><i class="fas fa-times"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопки управления -->
+                <div class="d-flex justify-content-between mt-4">
+                    <button class="btn btn-outline-lavender">
+                        <i class="fas fa-arrow-left me-2"></i>Продолжить покупки
+                    </button>
+                    <button class="btn btn-outline-danger">
+                        <i class="fas fa-trash me-2"></i>Очистить корзину
+                    </button>
+                </div>
+            </div>
+
+            <!-- Сводка заказа -->
+            <div class="col-lg-4">
+                <div class="cart-summary">
+                    <h4 class="mb-4">Сводка заказа</h4>
+                    <div class="summary-item">
+                        <span>Товары (2)</span>
+                        <span>₽ 2 700</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Скидка</span>
+                        <span class="text-success">- ₽ 200</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Доставка</span>
+                        <span>₽ 300</span>
+                    </div>
+                    <hr>
+                    <div class="summary-item">
+                        <span class="fw-bold">Итого</span>
+                        <span class="fw-bold">₽ 2 800</span>
+                    </div>
+
+                    <!-- Промокод -->
+                    <div class="mt-4">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Промокод">
+                            <button class="btn btn-outline-lavender" type="button">Применить</button>
+                        </div>
+                    </div>
+
+                    <!-- Кнопка оформления -->
+                    <button class="btn btn-lavender w-100 mt-3">
+                        <i class="fas fa-check me-2"></i>Оформить заказ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>О нас</h5>
+                    <p>Мы выращиваем лаванду и производим натуральные продукты с заботой о вашем здоровье и благополучии.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Контакты</h5>
+                    <p><i class="fas fa-phone me-2"></i>8 (800) 123-45-67</p>
+                    <p><i class="fas fa-envelope me-2"></i>info@lavender.ru</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i>Краснодарский край, Лавандовая долина</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Мы в соцсетях</h5>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">© 2025 Лавандовый рай. Все права</p>
+
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
