@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     --lavender-light: #E6E6FA;
     --lavender-main: #9B7EDC;
     --lavender-dark: #694FA8;
@@ -15,13 +15,15 @@ body {
 }
 
 .hero-section {
-    background: linear-gradient(rgba(107, 79, 168, 0.3), rgba(107, 79, 168, 0.3)), url('/api/placeholder/1920/800');
+    background: linear-gradient(rgba(107, 79, 168, 0.05), rgba(107, 79, 168, 0.15)), url('../../src/img/1.jpg');
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     padding: 200px 0;
     position: relative;
     overflow: hidden;
 }
+
 
 .hero-content {
     position: relative;
@@ -166,3 +168,32 @@ footer {
 .auth-buttons .btn {
     margin-left: 10px;
 }
+
+
+/* Добавьте эти стили в ваш существующий CSS файл */
+.navbar .navbar-nav {
+    margin: 0 auto;
+}
+
+.navbar .nav-link {
+    padding: 0.5rem 1rem;
+    text-align: center;
+}
+
+    .navbar .nav-link i {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 1.2rem;
+    }
+
+.btn-outline-light {
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline-light:hover {
+        background-color: var(--lavender-main);
+        border-color: var(--lavender-main);
+        transform: translateY(-2px);
+    }
