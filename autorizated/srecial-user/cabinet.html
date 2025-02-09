@@ -1,0 +1,270 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Личный кабинет - Лавандовый рай</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --lavender-light: #E6E6FA;
+            --lavender-main: #9B7EDC;
+            --lavender-dark: #694FA8;
+            --lavender-text: #4A366C;
+        }
+
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--lavender-text);
+            padding-top: 76px;
+        }
+
+        .navbar {
+            background-color: rgba(107, 79, 168, 0.95) !important;
+        }
+
+       
+        .profile-section {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .avatar-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--lavender-main);
+        }
+
+            .avatar-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .balance-card {
+            background: linear-gradient(135deg, var(--lavender-main), var(--lavender-dark));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .order-card {
+            border: 1px solid var(--lavender-light);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+            .order-card:hover {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                transform: translateY(-2px);
+            }
+
+        .user-info-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--lavender-light);
+        }
+
+        .user-role {
+            background-color: var(--lavender-light);
+            color: var(--lavender-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-spa me-2"></i>Лавандовый рай
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="catalog.html">
+                            <i class="fas fa-flask"></i>
+                            Каталог
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">
+                            <i class="fas fa-leaf"></i>
+                            О лаванде
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link scroll-to-contacts" href="#contacts-section">
+                            <i class="fas fa-envelope"></i>
+                            Контакты
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">
+                            <i class="fas fa-shopping-cart"></i>
+                            Корзина
+                        </a>
+                    </li>
+                </ul>
+                <div class="ms-auto">
+                    <a href="cabinet.html" class="btn btn-outline-light">
+                        <i class="fas fa-user me-2"></i>Войти
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="container py-5">
+        <div class="row">
+            <!-- Профиль пользователя -->
+            <div class="col-md-4">
+                <div class="profile-section text-center">
+                    <div class="avatar-container">
+                        <img src="/api/placeholder/150/150" alt="Аватар пользователя">
+                    </div>
+                    <h4 class="mb-3">Иванова Анна</h4>
+                    <span class="user-role mb-4">Постоянный клиент</span>
+                    <div class="user-info mt-4">
+                        <div class="user-info-item">
+                            <i class="fas fa-envelope me-2"></i>
+                            <span>anna.ivanova@email.com</span>
+                        </div>
+                        <div class="user-info-item">
+                            <i class="fas fa-key me-2"></i>
+                            <a href="#" class="text-decoration-none">Изменить пароль</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Баланс -->
+                <div class="balance-card">
+                    <h5>Баланс счета</h5>
+                    <h3 class="mb-0">₽ 5,400</h3>
+                    <small>Бонусные баллы: 240</small>
+                </div>
+            </div>
+
+            <!-- История заказов -->
+            <div class="col-md-8">
+                <h4 class="mb-4">История заказов</h4>
+
+                <!-- Заказ -->
+                <div class="order-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">Заказ #1234</h6>
+                        <span class="badge bg-success">Доставлен</span>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="mb-1">Эфирное масло лаванды (2 шт)</p>
+                            <p class="mb-1">Спрей для подушки (1 шт)</p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <p class="mb-1">Сумма: ₽ 3,290</p>
+                            <small class="text-muted">15.01.2025</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Заказ -->
+                <div class="order-card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">Заказ #1189</h6>
+                        <span class="badge bg-success">Доставлен</span>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="mb-1">Массажное масло (1 шт)</p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <p class="mb-1">Сумма: ₽ 1,500</p>
+                            <small class="text-muted">03.01.2025</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer id="contacts-section" class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>О нас</h5>
+                    <p>
+                        Мы выращиваем лаванду и производим натуральные продукты
+                        с заботой о вашем здоровье и благополучии. Наша история началась
+                        с небольшого лавандового поля в живописной долине Молдовы, где идеальный
+                        климат и плодородная почва создают превосходные условия для выращивания
+                        этого удивительного растения.
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Контакты</h5>
+                    <p><i class="fas fa-phone me-2"></i>+37368332507</p>
+                    <p><i class="fas fa-envelope me-2"></i>roman.poddubnii@isa.utm.md</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i>Муниципиу Кишинэу, Лавандовая долина</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Мы в соцсетях</h5>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-vk"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-telegram"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">© 2025 Лавандовый рай. Все права</p>
+
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+        document.querySelector('.scroll-to-contacts').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            document.querySelector('#contacts-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+
+</body>
+</html>

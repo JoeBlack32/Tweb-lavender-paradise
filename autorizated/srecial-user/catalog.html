@@ -1,0 +1,434 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Каталог - Лавандовый рай</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .category-title {
+            color: var(--lavender-dark);
+            padding: 2rem 0 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--lavender-light);
+            position: relative;
+        }
+
+            .category-title::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 100px;
+                height: 2px;
+                background-color: var(--lavender-main);
+            }
+
+        .category-section {
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+            .product-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FF4E50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .price-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .original-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 0.9em;
+        }
+
+        .discounted-price {
+            color: #FF4E50;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .product-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .product-card .card-title {
+            color: var(--lavender-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .product-card .card-text {
+            color: #666;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .btn-lavender {
+            width: 100%;
+            border-radius: 25px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-spa me-2"></i>Лавандовый рай
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="catalog.html">
+                            <i class="fas fa-flask"></i>
+                            Каталог
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">
+                            <i class="fas fa-leaf"></i>
+                            О лаванде
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link scroll-to-contacts" href="#contacts-section">
+                            <i class="fas fa-envelope"></i>
+                            Контакты
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">
+                            <i class="fas fa-shopping-cart"></i>
+                            Корзина
+                        </a>
+                    </li>
+                </ul>
+                <div class="ms-auto">
+                    <a href="cabinet.html" class="btn btn-outline-light">
+                        <i class="fas fa-user me-2"></i>Войти
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент каталога -->
+    <section class="py-5 bg-light mt-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Каталог товаров</h2>
+
+            <!-- Категория: Ароматерапия и масла -->
+            <div class="category-section">
+                <h3 class="category-title">Ароматерапия и масла</h3>
+                <div class="row">
+
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            <div class="discount-badge">-15%</div>
+                            <img src="../../src/img/maslo-lovaadi.jpg" class="img-fluid" alt="Эфирное масло лаванды">
+                            <div class="card-body">
+                                <h5 class="card-title">Эфирное масло лаванды</h5>
+                                <p class="card-text">Натуральный продукт с лавандой</p>
+                                <div class="price-container">
+                                    <span class="original-price">₽ 1 200</span>
+                                    <span class="discounted-price">₽ 1 020</span>
+                                </div>
+                                <button class="btn btn-lavender">
+                                    <i class="fas fa-shopping-cart me-2"></i>В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            <div class="discount-badge">-15%</div>
+                            <img src="../../src/img/massaj-maslo.jpg" class="img-fluid" alt="Массажное масло">
+                            <div class="card-body">
+                                <h5 class="card-title">Массажное масло</h5>
+                                <p class="card-text">Натуральный продукт с лавандой</p>
+                                <div class="price-container">
+                                    <span class="original-price">₽ 1 500</span>
+                                    <span class="discounted-price">₽ 1 275</span>
+                                </div>
+                                <button class="btn btn-lavender">
+                                    <i class="fas fa-shopping-cart me-2"></i>В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            <div class="discount-badge">-15%</div>
+                            <img src="../../src/img/maslo-dly-litsa.jpg" class="img-fluid" alt="Масло для лица">
+                            <div class="card-body">
+                                <h5 class="card-title">Масло для лица</h5>
+                                <p class="card-text">Натуральный продукт с лавандой</p>
+                                <div class="price-container">
+                                    <span class="original-price">₽ 1 100</span>
+                                    <span class="discounted-price">₽ 935</span>
+                                </div>
+                                <button class="btn btn-lavender">
+                                    <i class="fas fa-shopping-cart me-2"></i>В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Категория: Уход за телом -->
+            <div class="category-section">
+                <h3 class="category-title">Уход за телом</h3>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            <div class="discount-badge">-15%</div>
+                            <img src="../../src/img/milo.jpg" class="img-fluid" alt="Лавандовое мыло">
+                            <div class="card-body">
+                                <h5 class="card-title">Лавандовое мыло</h5>
+                                <p class="card-text">Натуральный продукт с лавандой</p>
+                                <div class="price-container">
+                                    <span class="original-price">₽ 450</span>
+                                    <span class="discounted-price">₽ 392</span>
+                                </div>
+                                <button class="btn btn-lavender">
+                                    <i class="fas fa-shopping-cart me-2"></i>В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            <div class="discount-badge">-15%</div>
+                            <img src="../../src/img/soli.jpg" class="img-fluid" alt="Соль для ванны">
+                            <div class="card-body">
+                                <h5 class="card-title">Соль для ванны</h5>
+                                <p class="card-text">Натуральный продукт с лавандой</p>
+                                <div class="price-container">
+                                    <span class="original-price">₽ 850</span>
+                                    <span class="discounted-price">₽ 800</span>
+                                </div>
+                                <button class="btn btn-lavender">
+                                    <i class="fas fa-shopping-cart me-2"></i>В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            <div class="discount-badge">-15%</div>
+                            <img src="../../src/img/krem.jpg" class="img-fluid" alt="Лавандовый крем">
+                            <div class="card-body">
+                                <h5 class="card-title">Лавандовый крем</h5>
+                                <p class="card-text">Натуральный продукт с лавандой</p>
+                                <div class="price-container">
+                                    <span class="original-price">₽ 1 250</span>
+                                    <span class="discounted-price">₽ 935</span>
+                                </div>
+                                <button class="btn btn-lavender">
+                                    <i class="fas fa-shopping-cart me-2"></i>В корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Категория: Для дома и отдыха -->
+            <div class="category-section">
+                <h3 class="category-title">Для дома и отдыха</h3>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            <div class="discount-badge">-10%</div>
+                            <img src="../../src/img/svechka.jpg" class="img-fluid" alt="Свеча с лавандой">
+                            <div class="card-body">
+                                <h5 class="card-title">Свеча с лавандой</h5>
+                                <p class="card-text">Натуральный продукт с лавандой</p>
+                                <div class="price-container">
+                                    <span class="original-price">₽ 750</span>
+                                    <span class="discounted-price">₽ 670</span>
+                                </div>
+                                <button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            <div class="discount-badge">-12%</div>
+                            <img src="../../src/img/sahe.jpg" class="img-fluid" alt="Саше с лавандой">
+                            <div class="card-body">
+                                <h5 class="card-title">Мёд с лавандой</h5>
+                                <p class="card-text">Натуральный мёд с нежным ароматом лаванды</p>
+                                <div class="price-container">
+                                    <span class="original-price">₽ 1 400</span>
+                                    <span class="discounted-price">₽ 1 232</span>
+                                </div>
+                                <button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            <div class="discount-badge">-8%</div>
+                            <img src="../../src/img/dva-sprei.jpg" class="img-fluid" alt="Ароматический спрей">
+                            <div class="card-body">
+                                <h5 class="card-title">Ароматический спрей</h5>
+                                <p class="card-text">Натуральный продукт с лавандой</p>
+                                <div class="price-container">
+                                    <span class="original-price">₽ 800</span>
+                                    <span class="discounted-price">₽ 736</span>
+                                </div>
+                                <button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Категория: Продукты питания -->
+            <div class="category-section">
+                <h3 class="category-title">Продукты питания</h3>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            <div class="discount-badge">-10%</div>
+                            <img src="../../src/img/chai.jpg" class="img-fluid" alt="Чай с лавандой">
+                            <div class="card-body">
+                                <h5 class="card-title">Чай с лавандой</h5>
+                                <p class="card-text">Ароматный чай с добавлением цветков лаванды</p>
+                                <div class="price-container">
+                                    <span class="original-price">₽ 600</span>
+                                    <span class="discounted-price">₽ 540</span>
+                                </div>
+                                <button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            <div class="discount-badge">-12%</div>
+                            <img src="../../src/img/med.jpg" class="img-fluid" alt="Мёд с лавандой">
+                            <div class="card-body">
+                                <h5 class="card-title">Мёд с лавандой</h5>
+                                <p class="card-text">Натуральный мёд с нежным ароматом лаванды</p>
+                                <div class="price-container">
+                                    <span class="original-price">₽ 1 400</span>
+                                    <span class="discounted-price">₽ 1 232</span>
+                                </div>
+                                <button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Футер -->
+    <footer id="contacts-section" class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>О нас</h5>
+                    <p>
+                        Мы выращиваем лаванду и производим натуральные продукты
+                        с заботой о вашем здоровье и благополучии. Наша история началась
+                        с небольшого лавандового поля в живописной долине Молдовы, где идеальный
+                        климат и плодородная почва создают превосходные условия для выращивания
+                        этого удивительного растения.
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Контакты</h5>
+                    <p><i class="fas fa-phone me-2"></i>+37368332507</p>
+                    <p><i class="fas fa-envelope me-2"></i>roman.poddubnii@isa.utm.md</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i>Муниципиу Кишинэу, Лавандовая долина</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Мы в соцсетях</h5>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-vk"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-telegram"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">© 2025 Лавандовый рай. Все права</p>
+
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+        document.querySelector('.scroll-to-contacts').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            document.querySelector('#contacts-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+
+</body>
+</html>
