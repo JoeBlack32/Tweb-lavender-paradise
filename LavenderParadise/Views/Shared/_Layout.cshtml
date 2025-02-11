@@ -1,0 +1,120 @@
+﻿
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Лавандовый рай - Магазин лаванды и масел</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/Site.css">
+
+</head>
+<body>
+    @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+            <div class="container">
+                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Переключить навигацию" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li>@Html.ActionLink("Домашняя страница", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Информация", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Связаться", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
+                </div>
+            </div>
+        </nav>*@
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-spa me-2"></i>Лавандовый рай
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Home")">
+                            <i class="fas fa-home"></i> Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Catalog", "Home")">
+                            <i class="fas fa-flask"></i> Каталог
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("About", "Home")">
+                            <i class="fas fa-leaf"></i> О лаванде
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link scroll-to-contacts" href="#contacts-section">
+                            <i class="fas fa-envelope"></i>
+                            Контакты
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Registration", "Home")">
+                            <i class="fas fa-shopping-cart"></i>
+                            Корзина
+                        </a>
+                    </li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="@Url.Action("Avtorization", "Home")" class="btn btn-outline-light">Войти</a>
+                    <a href="@Url.Action("Registration", "Home")" class="btn btn-light">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+        @RenderBody()
+
+    <footer id="contacts-section" class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>О нас</h5>
+                    <p>
+                        Мы выращиваем лаванду и производим натуральные продукты
+                        с заботой о вашем здоровье и благополучии. Наша история началась
+                        с небольшого лавандового поля в живописной долине Молдовы, где идеальный
+                        климат и плодородная почва создают превосходные условия для выращивания
+                        этого удивительного растения.
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Контакты</h5>
+                    <p><i class="fas fa-phone me-2"></i>+37368332507</p>
+                    <p><i class="fas fa-envelope me-2"></i>roman.poddubnii@isa.utm.md</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i>Муниципиу Кишинэу, Лавандовая долина</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Мы в соцсетях</h5>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-vk"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-telegram"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">© 2025 Лавандовый рай. Все права</p>
+
+
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

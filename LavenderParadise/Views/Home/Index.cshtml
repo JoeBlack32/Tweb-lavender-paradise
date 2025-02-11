@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<body>
+    <!-- Главный баннер -->
+    <header class="hero-section">
+        <div class="floating-leaves"></div>
+        <div class="container hero-content text-center text-white">
+            <h1 class="display-3 mb-4">Волшебство природы в каждой капле</h1>
+            <p class="lead mb-4">Откройте для себя целебную силу лаванды в нашей коллекции натуральных масел и продуктов</p>
+            <a href="#catalog" class="btn btn-lavender btn-lg">Исследовать коллекцию</a>
+        </div>
+    </header>
+
+    <!-- Преимущества -->
+    <section class="py-5 bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3>100% натуральный продукт</h3>
+                        <p>Масла получены путем паровой дистилляции свежей лаванды</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>Сертифицировано</h3>
+                        <p>Все продукты имеют сертификаты качества и безопасности</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3>Бережная доставка</h3>
+                        <p>Специальная упаковка сохранит все полезные свойства</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Каталог -->
+    <section id="catalog" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Новая коллекция товаров</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="../src/img/maslo-lovaadi.jpg" class="img-fluid" alt="Лавандовое масло">
+                        <div class="card-body">
+                            <h5 class="card-title">Эфирное масло лаванды</h5>
+                            <p class="card-text">100% натуральное масло для ароматерапии</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-tag">₽ 1 200</span>
+                                <!--<button class="btn btn-lavender">
+                                    <i class="fas fa-shopping-cart me-2"></i>В корзину
+                                </button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="../src/img/massaj-maslo.jpg" class="img-fluid" alt="Масло для массажа">
+                        <div class="card-body">
+                            <h5 class="card-title">Массажное масло</h5>
+                            <p class="card-text">Расслабляющее масло с лавандой</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-tag">₽ 1 500</span>
+                                <!--<button class="btn btn-lavender">
+                                    <i class="fas fa-shopping-cart me-2"></i>В корзину
+                                </button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="../src/img/sprei.jpg" class="img-fluid" alt="Спрей для подушки">
+                        <div class="card-body">
+                            <h5 class="card-title">Спрей для подушки</h5>
+                            <p class="card-text">Способствует здоровому сну</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="price-tag">₽ 890</span>
+                                <!--<button class="btn btn-lavender">
+                                    <i class="fas fa-shopping-cart me-2"></i>В корзину
+                                </button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        document.querySelector('.scroll-to-contacts').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            document.querySelector('#contacts-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });</script>
+
+
+</body>
