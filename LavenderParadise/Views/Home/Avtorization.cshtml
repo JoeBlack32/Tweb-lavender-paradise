@@ -1,60 +1,63 @@
-﻿    <!-- Секция входа -->
-    <section class="py-5 mt-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card shadow-lg">
-                        <div class="card-body p-5">
-                            <div class="text-center mb-4">
-                                <i class="fas fa-spa mb-3" style="font-size: 2.5rem; color: var(--lavender-main);"></i>
-                                <h3 class="mb-2">Вход в аккаунт</h3>
-                                <p class="text-muted">Войдите, чтобы получить доступ к вашему профилю</p>
+﻿@{
+    ViewBag.Title = "Authorization";
+}
+<!-- Секция входа -->
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-spa mb-3" style="font-size: 2.5rem; color: var(--lavender-main);"></i>
+                            <h3 class="mb-2">Вход в аккаунт</h3>
+                            <p class="text-muted">Войдите, чтобы получить доступ к вашему профилю</p>
+                        </div>
+
+                        <form>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email" placeholder="Email"
+                                       style="border-color: var(--lavender-main); border-radius: 10px;">
+                                <label for="email">Email</label>
                             </div>
 
-                            <form>
-                                <div class="form-floating mb-3">
-                                    <input type="email" class="form-control" id="email" placeholder="Email"
-                                           style="border-color: var(--lavender-main); border-radius: 10px;">
-                                    <label for="email">Email</label>
-                                </div>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="password" placeholder="Пароль"
+                                       style="border-color: var(--lavender-main); border-radius: 10px;">
+                                <label for="password">Пароль</label>
+                            </div>
 
-                                <div class="form-floating mb-4">
-                                    <input type="password" class="form-control" id="password" placeholder="Пароль"
-                                           style="border-color: var(--lavender-main); border-radius: 10px;">
-                                    <label for="password">Пароль</label>
-                                </div>
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="remember"
+                                       style="border-color: var(--lavender-main);">
+                                <label class="form-check-label" for="remember">
+                                    Запомнить меня
+                                </label>
+                            </div>
 
-                                <div class="form-check mb-4">
-                                    <input class="form-check-input" type="checkbox" id="remember"
-                                           style="border-color: var(--lavender-main);">
-                                    <label class="form-check-label" for="remember">
-                                        Запомнить меня
-                                    </label>
-                                </div>
+                            <button class="btn btn-lavender w-100 py-3 mb-3" type="submit">
+                                <i class="fas fa-sign-in-alt me-2"></i>Войти
+                            </button>
 
-                                <button class="btn btn-lavender w-100 py-3 mb-3" type="submit">
-                                    <i class="fas fa-sign-in-alt me-2"></i>Войти
-                                </button>
-
-                                <div class="text-center">
-                                    <small class="text-muted">
-                                        Нет аккаунта? <a href="registration.html" style="color: var(--lavender-main);">Зарегистрироваться</a>
-                                    </small>
-                                </div>
-                            </form>
-                        </div>
+                            <div class="text-center">
+                                <small class="text-muted">
+                                    Нет аккаунта? <a href="registration.html" style="color: var(--lavender-main);">Зарегистрироваться</a>
+                                </small>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <script>
-        document.querySelector('.scroll-to-contacts').addEventListener('click', function (e) {
-            e.preventDefault();
+<script>
+    document.querySelector('.scroll-to-contacts').addEventListener('click', function (e) {
+        e.preventDefault();
 
-            document.querySelector('#contacts-section').scrollIntoView({
-                behavior: 'smooth'
-            });
+        document.querySelector('#contacts-section').scrollIntoView({
+            behavior: 'smooth'
         });
-    </script>
+    });
+</script>
