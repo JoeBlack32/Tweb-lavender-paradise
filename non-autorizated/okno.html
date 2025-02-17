@@ -7,10 +7,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
+
 </head>
 <body>
-    
+
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
@@ -111,16 +111,13 @@
             <h2 class="text-center mb-5">Новая коллекция товаров</h2>
             <div class="row">
                 <div class="col-md-4 mb-4">
-                    <div class="product-card">
+                    <div class="product-card" onclick="showProductDetails('Эфирное масло лаванды', 1200, 'Натуральное эфирное масло лаванды высшего качества. Получено методом паровой дистилляции из свежих соцветий лаванды. Идеально подходит для ароматерапии, ухода за кожей и создания расслабляющей атмосферы.', '../src/img/maslo-lovaadi.jpg')">
                         <img src="../src/img/maslo-lovaadi.jpg" class="img-fluid" alt="Лавандовое масло">
                         <div class="card-body">
                             <h5 class="card-title">Эфирное масло лаванды</h5>
                             <p class="card-text">100% натуральное масло для ароматерапии</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="price-tag">₽ 1 200</span>
-                                <!--<button class="btn btn-lavender">
-                                    <i class="fas fa-shopping-cart me-2"></i>В корзину
-                                </button>-->
                             </div>
                         </div>
                     </div>
@@ -128,7 +125,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="product-card">
                         <img src="../src/img/massaj-maslo.jpg" class="img-fluid" alt="Масло для массажа">
-                        <div class="card-body">
+                        <div class="card-body" onclick="showProductDetails('Эфирное масло лаванды', 1200, 'Натуральное эфирное масло лаванды высшего качества. Получено методом паровой дистилляции из свежих соцветий лаванды. Идеально подходит для ароматерапии, ухода за кожей и создания расслабляющей атмосферы.', '../src/img/maslo-lovaadi.jpg')">>
                             <h5 class="card-title">Массажное масло</h5>
                             <p class="card-text">Расслабляющее масло с лавандой</p>
                             <div class="d-flex justify-content-between align-items-center">
@@ -159,17 +156,67 @@
         </div>
     </section>
 
+    <!-- Добавляем модальное окно -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img id="modalProductImage" class="img-fluid rounded" alt="Продукт">
+                        </div>
+                        <div class="col-md-6">
+                            <p id="modalProductDescription" class="mb-4"></p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="price-tag" id="modalProductPrice"></span>
+                                <button class="btn btn-lavender">
+                                    <i class="fas fa-shopping-cart me-2"></i>В корзину
+                                </button>
+                            </div>
+                            <div class="text-center">
+                                <a id="fullDescriptionLink" href="#" class="btn btn-outline-lavender w-100">
+                                    <i class="fas fa-book-open me-2"></i>Полное описание
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+function showProductDetails(title, price, description, imageUrl) {
+    const modal = new bootstrap.Modal(document.getElementById('productModal'));
+
+    // Заполняем данные модального окна
+    document.querySelector('#productModal .modal-title').textContent = title;
+    document.getElementById('modalProductDescription').textContent = description;
+    document.getElementById('modalProductPrice').textContent = `₽ ${price}`;
+    document.getElementById('modalProductImage').src = imageUrl;
+
+    // Показываем модальное окно
+    modal.show();
+}
+    </script>
+
     <!-- Футер -->
     <footer id="contacts-section" class="py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <h5>О нас</h5>
-                    <p>Мы выращиваем лаванду и производим натуральные продукты 
-                    с заботой о вашем здоровье и благополучии. Наша история началась 
-                    с небольшого лавандового поля в живописной долине Молдовы, где идеальный 
-                    климат и плодородная почва создают превосходные условия для выращивания 
-                    этого удивительного растения. </p>
+                    <p>
+                        Мы выращиваем лаванду и производим натуральные продукты
+                        с заботой о вашем здоровье и благополучии. Наша история началась
+                        с небольшого лавандового поля в живописной долине Молдовы, где идеальный
+                        климат и плодородная почва создают превосходные условия для выращивания
+                        этого удивительного растения.
+                    </p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <h5>Контакты</h5>
@@ -198,7 +245,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    
+
     <script>
         document.querySelector('.scroll-to-contacts').addEventListener('click', function (e) {
             e.preventDefault();
@@ -209,6 +256,6 @@
         });
     </script>
 
-    
+
 </body>
 </html>

@@ -1,0 +1,456 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Лавандовый рай - Управление пользователями</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .role-admin {
+            background-color: #9BB8FF;
+            color: #1c3d72;
+        }
+
+        .role-regular {
+            background-color: #B5FF9B;
+            color: #1c721f;
+        }
+
+        .role-user {
+            background-color: #B5FF9B;
+            color: #1c721f;
+        }
+
+        .section-title {
+            background-color: var(--lavender-light);
+            padding: 1rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            color: var(--lavender-dark);
+            font-weight: bold;
+        }
+
+        .user-avatar {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 1rem auto;
+        }
+
+        .special-button {
+            background-color: var(--lavender-dark);
+            color: white;
+            font-weight: bold;
+            border: 2px solid var(--lavender-main);
+        }
+
+            .special-button:hover {
+                background-color: var(--lavender-main);
+                color: white;
+                transform: translateY(-2px);
+            }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
+
+            .delete-button:hover {
+                background-color: #c82333;
+                color: white;
+            }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-spa me-2"></i>Лавандовый рай
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-home"></i>
+                            Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="catalog.html">
+                            <i class="fas fa-flask"></i>
+                            Каталог
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">
+                            <i class="fas fa-leaf"></i>
+                            О лаванде
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link scroll-to-contacts" href="#contacts-section">
+                            <i class="fas fa-envelope"></i>
+                            Контакты
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="registration.html">
+                            <i class="fas fa-shopping-cart"></i>
+                            Корзина
+                        </a>
+                    </li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="avtorization.html" class="btn btn-outline-light">Войти</a>
+                    <a href="registration.html" class="btn btn-light">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Секция управления пользователями -->
+    <section class="py-5 bg-light" style="margin-top: 80px;">
+        <div class="container">
+            <h2 class="text-center mb-5">Управление пользователями</h2>
+
+            <!-- Секция администраторов -->
+            <div class="section-title">
+                <i class="fas fa-user-shield me-2"></i>Администраторы
+            </div>
+            <div class="row mb-5">
+                <!-- Пример карточки администратора -->
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <div class="text-center">
+                            <img src="../src/img/admin-avatar.jpg" class="user-avatar" alt="Администратор">
+                            <span class="badge role-admin mb-2">Администратор</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Иван Петров</h5>
+                            <p class="card-text text-center">admin@lavanda.com</p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-lavender" onclick="showEditUserModal('admin-1')">
+                                    <i class="fas fa-user-edit me-2"></i>Изменить личные данные
+                                </button>
+                                <button class="btn btn-lavender" onclick="showPasswordModal('admin-1')">
+                                    <i class="fas fa-key me-2"></i>Изменить пароль
+                                </button>
+                                <button class="btn btn-lavender" onclick="showAvatarModal('admin-1')">
+                                    <i class="fas fa-image me-2"></i>Изменить аватар
+                                </button>
+                                <button class="btn special-button" onclick="showRoleModal('admin-1')">
+                                    <i class="fas fa-user-shield me-2"></i>Настроить роль
+                                </button>
+                                <button class="btn delete-button" onclick="confirmDeleteUser('Иван Петров')">
+                                    <i class="fas fa-user-times me-2"></i>Удалить аккаунт
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция постоянных пользователей -->
+            <div class="section-title">
+                <i class="fas fa-star me-2"></i>Постоянные пользователи
+            </div>
+            <div class="row mb-5">
+                <!-- Пример карточки постоянного пользователя -->
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <div class="text-center">
+                            <img src="../src/img/regular-avatar.jpg" class="user-avatar" alt="Постоянный пользователь">
+                            <span class="badge role-regular mb-2">Постоянный пользователь</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Елена Иванова</h5>
+                            <p class="card-text text-center">elena@lavanda.com</p>
+                            
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-lavender" onclick="showEditUserModal('admin-1')">
+                                        <i class="fas fa-user-edit me-2"></i>Изменить личные данные
+                                    </button>
+                                    <button class="btn btn-lavender" onclick="showPasswordModal('admin-1')">
+                                        <i class="fas fa-key me-2"></i>Изменить пароль
+                                    </button>
+                                    <button class="btn btn-lavender" onclick="showAvatarModal('admin-1')">
+                                        <i class="fas fa-image me-2"></i>Изменить аватар
+                                    </button>
+                                    <button class="btn special-button" onclick="showRoleModal('admin-1')">
+                                        <i class="fas fa-user-shield me-2"></i>Настроить роль
+                                    </button>
+                                    <button class="btn delete-button" onclick="confirmDeleteUser('Иван Петров')">
+                                        <i class="fas fa-user-times me-2"></i>Удалить аккаунт
+                                    </button>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция обычных пользователей -->
+            <div class="section-title">
+                <i class="fas fa-users me-2"></i>Пользователи
+            </div>
+            <div class="row">
+                <!-- Пример карточки обычного пользователя -->
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <div class="text-center">
+                            <img src="../src/img/user-avatar.jpg" class="user-avatar" alt="Пользователь">
+                            <span class="badge role-user mb-2">Пользователь</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Анна Козлова</h5>
+                            <p class="card-text text-center">user@lavanda.com</p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-lavender" onclick="showEditUserModal('admin-1')">
+                                    <i class="fas fa-user-edit me-2"></i>Изменить личные данные
+                                </button>
+                                <button class="btn btn-lavender" onclick="showPasswordModal('admin-1')">
+                                    <i class="fas fa-key me-2"></i>Изменить пароль
+                                </button>
+                                <button class="btn btn-lavender" onclick="showAvatarModal('admin-1')">
+                                    <i class="fas fa-image me-2"></i>Изменить аватар
+                                </button>
+                                <button class="btn special-button" onclick="showRoleModal('admin-1')">
+                                    <i class="fas fa-user-shield me-2"></i>Настроить роль
+                                </button>
+                                <button class="btn delete-button" onclick="confirmDeleteUser('Иван Петров')">
+                                    <i class="fas fa-user-times me-2"></i>Удалить аккаунт
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальные окна остаются теми же, но обновляем окно выбора роли -->
+    <div class="modal fade" id="roleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изменение роли пользователя</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="roleForm">
+                        <div class="mb-3">
+                            <label for="userRole" class="form-label">Выберите роль</label>
+                            <select class="form-select" id="userRole" required>
+                                <option value="user">Пользователь</option>
+                                <option value="regular">Постоянный пользователь</option>
+                                <option value="admin">Администратор</option>
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn special-button">Изменить роль</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно редактирования данных пользователя -->
+    <div class="modal fade" id="editUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Редактирование данных пользователя</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm">
+                        <div class="mb-3">
+                            <label for="userName" class="form-label">Имя</label>
+                            <input type="text" class="form-control" id="userName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userSurname" class="form-label">Фамилия</label>
+                            <input type="text" class="form-control" id="userSurname" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="userEmail" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-lavender">Сохранить изменения</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно изменения пароля -->
+    <div class="modal fade" id="passwordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изменение пароля</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="passwordForm">
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">Новый пароль</label>
+                            <input type="password" class="form-control" id="newPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Подтвердите пароль</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-lavender">Изменить пароль</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Модальное окно подтверждения удаления -->
+    <div class="modal fade" id="deleteUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Подтверждение удаления</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Вы уверены, что хотите удалить аккаунт пользователя "<span id="deleteUserName"></span>"?</p>
+                    <p class="text-danger">Это действие нельзя будет отменить.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteUser()">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Функции для показа модальных окон
+        function showEditUserModal(userId) {
+            const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
+            modal.show();
+        }
+
+        function showPasswordModal(userId) {
+            const modal = new bootstrap.Modal(document.getElementById('passwordModal'));
+            modal.show();
+        }
+
+        function showAvatarModal(userId) {
+            
+        }
+
+        function showRoleModal(userId) {
+            const modal = new bootstrap.Modal(document.getElementById('roleModal'));
+            modal.show();
+        }
+
+        function confirmDeleteUser(userName) {
+            const modal = new bootstrap.Modal(document.getElementById('deleteUserModal'));
+            document.getElementById('deleteUserName').textContent = userName;
+            modal.show();
+        }
+
+        function deleteUser() {
+            const userName = document.getElementById('deleteUserName').textContent;
+            console.log('Удаление пользователя:', userName);
+            // Здесь будет код для удаления пользователя
+            bootstrap.Modal.getInstance(document.getElementById('deleteUserModal')).hide();
+        }
+
+        // Обработчики форм
+        document.getElementById('editUserForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Код для сохранения изменений
+            bootstrap.Modal.getInstance(document.getElementById('editUserModal')).hide();
+        });
+
+        document.getElementById('passwordForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Код для изменения пароля
+            bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
+        });
+
+        document.getElementById('roleForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Код для изменения роли
+            bootstrap.Modal.getInstance(document.getElementById('roleModal')).hide();
+        });
+    </script>
+
+    <!-- Футер -->
+    <footer id="contacts-section" class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>О нас</h5>
+                    <p>
+                        Мы выращиваем лаванду и производим натуральные продукты
+                        с заботой о вашем здоровье и благополучии. Наша история началась
+                        с небольшого лавандового поля в живописной долине Молдовы, где идеальный
+                        климат и плодородная почва создают превосходные условия для выращивания
+                        этого удивительного растения.
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Контакты</h5>
+                    <p><i class="fas fa-phone me-2"></i>+37368332507</p>
+                    <p><i class="fas fa-envelope me-2"></i>roman.poddubnii@isa.utm.md</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i>Муниципиу Кишинэу, Лавандовая долина</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Мы в соцсетях</h5>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-vk"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-telegram"></i></a>
+                        <a href="https://www.instagram.com/su_1side/?hl=en"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0">© 2025 Лавандовый рай. Все права</p>
+
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+        document.querySelector('.scroll-to-contacts').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            document.querySelector('#contacts-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+
+
+</body>
+</html>

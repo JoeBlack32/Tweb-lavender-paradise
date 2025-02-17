@@ -77,6 +77,7 @@ body {
 }
 
 .product-card {
+    cursor: pointer;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -168,3 +169,41 @@ footer {
 .auth-buttons .btn {
     margin-left: 10px;
 }
+
+
+.modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: var(--lavender-light);
+    border-bottom: none;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+#modalProductImage {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal .price-tag {
+    font-size: 1.2rem;
+}
+
+.btn-outline-lavender {
+    color: var(--lavender-main);
+    border: 2px solid var(--lavender-main);
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline-lavender:hover {
+        background-color: var(--lavender-main);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(107, 79, 168, 0.3);
+    }
