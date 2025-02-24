@@ -2,6 +2,7 @@
     ViewBag.Title = "Catalog";
 }
 
+@model LavenderParadise.Models.UserData
 <style>
 
     .category-title {
@@ -29,6 +30,14 @@
 <section class="py-5 bg-light mt-5">
     <div class="container">
         <h2 class="text-center mb-5">Каталог товаров</h2>
+
+        @foreach(var prod in Model.Products){
+            <p>
+                <span>@prod</span>
+            </p>
+        }
+
+        @Html.DisplayFor(u => u.Username)
 
         <!-- Категория: Ароматерапия и масла -->
         <div class="category-section">

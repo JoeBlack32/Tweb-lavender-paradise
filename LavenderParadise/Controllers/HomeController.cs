@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LavenderParadise.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,7 +16,10 @@ namespace LavenderParadise.Controllers
 
         public ActionResult Catalog()
         {
-            return View();
+            UserData u = new UserData();
+            u.Username = "Guest";
+            u.Products = new List<string> { "Product #1", "Product #2", "Product #3", "Product #4" };
+            return View(u);
         }
 
         public ActionResult About()
