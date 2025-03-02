@@ -27,6 +27,7 @@ namespace LavenderParadise.Controllers
                 
                 },
                 new GoodsCard { 
+
                     GoodName = "Лавандовый чай", 
                     GoodCode = 2, 
                     GoodDescription = "Ароматный травяной чай", 
