@@ -2,7 +2,9 @@
     ViewBag.Title = "Catalog";
 }
 
-@model LavenderParadise.Models.UserData
+@using System.Collections.Generic
+@model List<LavenderParadise.Models.GoodsCard>
+
 <style>
 
     .category-title {
@@ -30,58 +32,17 @@
 <section class="py-5 bg-light mt-5">
     <div class="container">
         <h2 class="text-center mb-5">Каталог товаров</h2>
-
-        @foreach(var prod in Model.Products){
-            <p>
-                <span>@prod</span>
-            </p>
-        }
-
-        @Html.DisplayFor(u => u.Username)
-
         <!-- Категория: Ароматерапия и масла -->
         <div class="category-section">
             <h3 class="category-title">Ароматерапия и масла</h3>
             <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="../src/img/maslo-lovaadi.jpg" class="img-fluid" alt="Эфирное масло лаванды">
-                        <div class="card-body">
-                            <h5 class="card-title">Эфирное масло лаванды</h5>
-                            <p class="card-text">Натуральный продукт с лавандой</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">₽ 1 200</span>
-                                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="../src/img/massaj-maslo.jpg" class="img-fluid" alt="Массажное масло">
-                        <div class="card-body">
-                            <h5 class="card-title">Массажное масло</h5>
-                            <p class="card-text">Натуральный продукт с лавандой</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">₽ 1 500</span>
-                                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="../src/img/maslo-dly-litsa.jpg" class="img-fluid" alt="Масло для лица">
-                        <div class="card-body">
-                            <h5 class="card-title">Масло для лица</h5>
-                            <p class="card-text">Натуральный продукт с лавандой</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">₽ 1 100</span>
-                                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                @foreach (var item in Model)
+                {
+                    if (item.Category == "Aromatherapy"){
+                        @Html.Partial("_GoodsCards", item) // Подключаем шаблон _GoodsCards
+                    }
+                }
             </div>
         </div>
 
@@ -89,45 +50,12 @@
         <div class="category-section">
             <h3 class="category-title">Уход за телом</h3>
             <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="../src/img/milo.jpg" class="img-fluid" alt="Лавандовое мыло">
-                        <div class="card-body">
-                            <h5 class="card-title">Лавандовое мыло</h5>
-                            <p class="card-text">Натуральный продукт с лавандой</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">₽ 450</span>
-                                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="../src/img/soli.jpg" class="img-fluid" alt="Соль для ванны">
-                        <div class="card-body">
-                            <h5 class="card-title">Соль для ванны</h5>
-                            <p class="card-text">Натуральный продукт с лавандой</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">₽ 850</span>
-                                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="../src/img/krem.jpg" class="img-fluid" alt="Лавандовый крем">
-                        <div class="card-body">
-                            <h5 class="card-title">Лавандовый крем</h5>
-                            <p class="card-text">Натуральный продукт с лавандой</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">₽ 1 250</span>
-                                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @foreach (var item in Model)
+                {
+                    if (item.Category == "Body Care"){
+                        @Html.Partial("_GoodsCards", item) // Подключаем шаблон _GoodsCards
+                    }
+                }
             </div>
         </div>
 
@@ -135,45 +63,12 @@
         <div class="category-section">
             <h3 class="category-title">Для дома и отдыха</h3>
             <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="../src/img/svechka.jpg" class="img-fluid" alt="Свеча с лавандой">
-                        <div class="card-body">
-                            <h5 class="card-title">Свеча с лавандой</h5>
-                            <p class="card-text">Натуральный продукт с лавандой</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">₽ 750</span>
-                                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="../src/img/sahe.jpg" class="img-fluid" alt="Саше с лавандой">
-                        <div class="card-body">
-                            <h5 class="card-title">Саше с лавандой</h5>
-                            <p class="card-text">Натуральный продукт с лавандой</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">₽ 300</span>
-                                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="../src/img/dva-sprei.jpg" class="img-fluid" alt="Ароматический спрей">
-                        <div class="card-body">
-                            <h5 class="card-title">Ароматический спрей</h5>
-                            <p class="card-text">Натуральный продукт с лавандой</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">₽ 900</span>
-                                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @foreach (var item in Model)
+                {
+                    if (item.Category == "For Home and Rest"){
+                        @Html.Partial("_GoodsCards", item) // Подключаем шаблон _GoodsCards
+                    }
+                }
             </div>
         </div>
 
@@ -181,32 +76,12 @@
         <div class="category-section">
             <h3 class="category-title">Продукты питания</h3>
             <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="../src/img/chai.jpg" class="img-fluid" alt="Чай с лавандой">
-                        <div class="card-body">
-                            <h5 class="card-title">Чай с лавандой</h5>
-                            <p class="card-text">Натуральный продукт с лавандой</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">₽ 600</span>
-                                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <img src="../src/img/med.jpg" class="img-fluid" alt="Мёд с лавандой">
-                        <div class="card-body">
-                            <h5 class="card-title">Мёд с лавандой</h5>
-                            <p class="card-text">Натуральный продукт с лавандой</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">₽ 1 400</span>
-                                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @foreach (var item in Model)
+                {
+                    if (item.Category == "Products for Consuming"){
+                        @Html.Partial("_GoodsCards", item) // Подключаем шаблон _GoodsCards
+                    }
+                }
             </div>
         </div>
     </div>
