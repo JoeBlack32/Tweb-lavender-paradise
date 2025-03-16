@@ -5,11 +5,11 @@ VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LavenderParadise", "LavenderParadise\LavenderParadise.csproj", "{D869E808-0E33-4851-BDE0-36F3BAB3D77F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tweb-lavender-paradise.BusinessLogic", "Tweb-lavender-paradise.BusinessLogic\Tweb-lavender-paradise.BusinessLogic.csproj", "{6D91DF09-38CE-4492-9A9C-083A8867FB28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tweb_lavender_paradise.BusinessLogic", "Tweb-lavender-paradise.BusinessLogic\Tweb_lavender_paradise.BusinessLogic.csproj", "{6D91DF09-38CE-4492-9A9C-083A8867FB28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tweb-lavender-paradise.Domain", "Tweb-lavender-paradise.Domain\Tweb-lavender-paradise.Domain.csproj", "{44458106-D608-477B-9F39-A130225F4158}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tweb_lavender_paradise.Domain", "Tweb-lavender-paradise.Domain\Tweb_lavender_paradise.Domain.csproj", "{44458106-D608-477B-9F39-A130225F4158}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tweb-lavender-paradise.Helper", "Tweb-lavender-paradise.Helper\Tweb-lavender-paradise.Helper.csproj", "{A1D60D99-66C7-46A6-81B1-DD9E2FF11DC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tweb_lavender_paradise.Helper", "Tweb-lavender-paradise.Helper\Tweb_lavender_paradise.Helper.csproj", "{A1D60D99-66C7-46A6-81B1-DD9E2FF11DC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

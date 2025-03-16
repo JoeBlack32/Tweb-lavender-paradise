@@ -8,5 +8,23 @@ namespace Tweb_lavender_paradise.BusinessLogic.Core.User
 {
     public class UserApi
     {
+        public UserApi()
+        {
+
+        }
+
+        public bool IsValidSessionAction(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool IsProductValidAction(int id)
+        {
+            return true;
+        }
     }
 }

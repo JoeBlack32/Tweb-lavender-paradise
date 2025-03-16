@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using Tweb_lavender_paradise.BusinessLogic.Core.User;
 using Tweb_lavender_paradise.BusinessLogic.Interfaces;
 
-
 namespace Tweb_lavender_paradise.BusinessLogic.BLogic
 {
-    public class UserBL : UserApi, IUser
+    public class ProductBL : UserApi, IProduct
     {
-        public bool IsValidSession(string key)
+        public bool IsProductValid(int id)
         {
-            return IsValidSessionAction(key);
+            return IsProductValidAction(id);
         }
     }
 }
