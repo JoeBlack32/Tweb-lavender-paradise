@@ -9,5 +9,6 @@ namespace LavenderParadise.Models
     {
         public string Username { get; set; }
         public List<string> Products { get; set; }
+        public string SingleProduct { get; internal set; }
     }
 }

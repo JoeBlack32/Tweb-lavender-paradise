@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "ProductDetails";
+}
+
+@using System.Collections.Generic
+@model Tweb_lavender_paradise.Domain.Models.UserModel
+@using Newtonsoft.Json
+
+<section class="py-5 bg-light mt-5">
+    <div class="container">
+        <div class="category-section">
+            <h3 class="category-title">Описание Продукта</h3>
+            <div class="row">
+                <div class="product-card">
+                    <img src="@Model.SingleProduct.ImgSrc" class="img-fluid" alt="@Model.SingleProduct.GoodName">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.SingleProduct.GoodName</h5>
+                        <p class="card-text">@Model.SingleProduct.GoodDescription</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price-tag">₽ @Model.SingleProduct.GoodPrice</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const modelData = @Html.Raw(JsonConvert.SerializeObject(Model));
+    console.log("Данные модели:", modelData);
+</script>

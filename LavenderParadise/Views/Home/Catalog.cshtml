@@ -3,7 +3,7 @@
 }
 
 @using System.Collections.Generic
-@model List<LavenderParadise.Models.GoodsCard>
+@model List<Tweb_lavender_paradise.Domain.Models.Product>
 
 <style>
 
@@ -36,15 +36,26 @@
         <div class="category-section">
             <h3 class="category-title">Ароматерапия и масла</h3>
             <div class="row">
+            @foreach (var item in Model){
+                if (item.Category == "Aromatherapy"){
+                    using(Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new {autocomplete = "off"}))
+                    {
+                    <div class="col-md-4 mb-4">
+                        <div class="product-card">
+                            @Html.Partial("_GoodsCards", item)
+                            <input type="hidden" name="btn" value="@item.GoodCode" />
 
-                @foreach (var item in Model)
-                {
-                    if (item.Category == "Aromatherapy"){
-                        @Html.Partial("_GoodsCards", item) // Подключаем шаблон _GoodsCards
+                            <button class="btn btn-lavender" type="submit" name="btn" value="@item.GoodCode">
+                                <i class="fas fa-shopping-cart me-2"></i> В корзину
+                            </button>
+                        </div>
+                    </div>
                     }
                 }
+            }
             </div>
         </div>
+    </div>
 
         <!-- Категория: Уход за телом -->
         <div class="category-section">
@@ -84,7 +95,7 @@
                 }
             </div>
         </div>
-    </div>
+    </divS
 </section>
 
 <script>

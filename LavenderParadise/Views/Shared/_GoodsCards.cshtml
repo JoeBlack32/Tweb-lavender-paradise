@@ -1,15 +1,11 @@
-﻿@model LavenderParadise.Models.GoodsCard
+﻿@model Tweb_lavender_paradise.Domain.Models.Product
 
-<div class="col-md-4 mb-4">
-    <div class="product-card">
-        <img src="@Model.ImgSrc" class="img-fluid" alt="@Model.GoodName">
-        <div class="card-body">
-            <h5 class="card-title">@Model.GoodName</h5>
-            <p class="card-text">@Model.GoodDescription</p>
-            <div class="d-flex justify-content-between align-items-center">
-                <span class="price-tag">₽ @Model.GoodPrice</span>
-                <!--<button class="btn btn-lavender"><i class="fas fa-shopping-cart me-2"></i>В корзину</button>-->
-            </div>
-        </div>
+<img src="@Model.ImgSrc" class="img-fluid" alt="@Model.GoodName">
+<div class="card-body">
+    <h5 class="card-title">@Model.GoodName</h5>
+    <p class="card-text">@Model.GoodDescription</p>
+    <div class="d-flex justify-content-between align-items-center">
+        <span class="price-tag">₽ @Model.GoodPrice</span>
     </div>
 </div>
+
