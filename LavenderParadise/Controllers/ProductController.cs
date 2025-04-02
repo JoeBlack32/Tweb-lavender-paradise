@@ -1,4 +1,5 @@
-﻿using LavenderParadise.Models;
+﻿using LavenderParadise.Controllers;
+using LavenderParadise.Models;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using Tweb_lavender_paradise.Domain.Models;
 
 namespace Tweb_lavender_paradise.Web.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         private readonly IProductService _productService;
 
@@ -31,8 +32,9 @@ namespace Tweb_lavender_paradise.Web.Controllers
                 {
                     var user = new UserModel
                     {
-                        Name = "Гость",
-                        Role = "User",
+                        FirstName = "Гость",
+                        LastName = "2",
+                        Role = ViewBag.UserRole,
                         SingleProduct = product,
                         btn = btn
                     };

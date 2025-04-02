@@ -36,7 +36,7 @@
         <div class="category-section">
             <h3 class="category-title">Ароматерапия и масла</h3>
             <div class="row">
-            @foreach (var item in Model){
+                @foreach (var item in Model){
                 if (item.Category == "Aromatherapy"){
                     using(Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new {autocomplete = "off"}))
                     {
@@ -55,47 +55,76 @@
             }
             </div>
         </div>
-    </div>
 
-        <!-- Категория: Уход за телом -->
         <div class="category-section">
             <h3 class="category-title">Уход за телом</h3>
             <div class="row">
-                @foreach (var item in Model)
-                {
+                @foreach (var item in Model){
                     if (item.Category == "Body Care"){
-                        @Html.Partial("_GoodsCards", item) // Подключаем шаблон _GoodsCards
+                        using(Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new {autocomplete = "off"}))
+                        {
+                            <div class="col-md-4 mb-4">
+                                <div class="product-card">
+                                    @Html.Partial("_GoodsCards", item)
+                                    <input type="hidden" name="btn" value="@item.GoodCode" />
+
+                                    <button class="btn btn-lavender" type="submit" name="btn" value="@item.GoodCode">
+                                        <i class="fas fa-shopping-cart me-2"></i> В корзину
+                                    </button>
+                                </div>
+                            </div>
+                        }
                     }
                 }
             </div>
         </div>
 
-        <!-- Категория: Для дома и отдыха -->
         <div class="category-section">
             <h3 class="category-title">Для дома и отдыха</h3>
             <div class="row">
-                @foreach (var item in Model)
-                {
+                @foreach (var item in Model){
                     if (item.Category == "For Home and Rest"){
-                        @Html.Partial("_GoodsCards", item) // Подключаем шаблон _GoodsCards
+                        using(Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new {autocomplete = "off"}))
+                        {
+                            <div class="col-md-4 mb-4">
+                                <div class="product-card">
+                                    @Html.Partial("_GoodsCards", item)
+                                    <input type="hidden" name="btn" value="@item.GoodCode" />
+
+                                    <button class="btn btn-lavender" type="submit" name="btn" value="@item.GoodCode">
+                                        <i class="fas fa-shopping-cart me-2"></i> В корзину
+                                    </button>
+                                </div>
+                            </div>
+                        }
                     }
                 }
             </div>
         </div>
 
-        <!-- Категория: Продукты питания -->
         <div class="category-section">
             <h3 class="category-title">Продукты питания</h3>
             <div class="row">
-                @foreach (var item in Model)
-                {
+                @foreach (var item in Model){
                     if (item.Category == "Products for Consuming"){
-                        @Html.Partial("_GoodsCards", item) // Подключаем шаблон _GoodsCards
+                        using(Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new {autocomplete = "off"}))
+                        {
+                            <div class="col-md-4 mb-4">
+                                <div class="product-card">
+                                    @Html.Partial("_GoodsCards", item)
+                                    <input type="hidden" name="btn" value="@item.GoodCode" />
+
+                                    <button class="btn btn-lavender" type="submit" name="btn" value="@item.GoodCode">
+                                        <i class="fas fa-shopping-cart me-2"></i> В корзину
+                                    </button>
+                                </div>
+                            </div>
+                        }
                     }
                 }
             </div>
         </div>
-    </divS
+    </div>
 </section>
 
 <script>

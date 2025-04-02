@@ -10,5 +10,6 @@ namespace Tweb_lavender_paradise.BusinessLogic.Interfaces
     public interface IProductService
     {
         Product GetProductById(int id);
+        List<Product> GetAllProducts();  
     }
 }

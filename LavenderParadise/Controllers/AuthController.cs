@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Tweb_lavender_paradise.BusinessLogic;
 using Tweb_lavender_paradise.BusinessLogic.Interfaces;
+using Tweb_lavender_paradise.BusinessLogic.BLogic;
+
 
 namespace LavenderParadise.Controllers
 {

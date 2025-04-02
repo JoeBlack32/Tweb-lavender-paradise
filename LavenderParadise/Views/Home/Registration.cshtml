@@ -1,6 +1,12 @@
 ﻿@{
     ViewBag.Title = "Registration";
 }
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+<div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+
 <!-- Секция регистрации  -->
 <section class="py-5 mt-5">
     <div class="container">
@@ -14,60 +20,67 @@
                             <p class="text-muted">Создайте аккаунт, чтобы получать новости и специальные предложения</p>
                         </div>
 
-                        <form>
-                            <div class="row g-3 mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="firstName" placeholder="Имя"
-                                               style="border-color: var(--lavender-main); border-radius: 10px;">
-                                        <label for="firstName">Имя</label>
-                                    </div>
+                        @using (Ajax.BeginForm("Login", "Account", new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            OnSuccess = "onLoginSuccess",
+                            OnFailure = "onLoginFailure",
+                            UpdateTargetId = "loginMessage"
+                        })){
+                        <div id="registerMessage"></div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="firstName" placeholder="Имя"
+                                           style="border-color: var(--lavender-main); border-radius: 10px;">
+                                    <label for="firstName">Имя</label>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="lastName" placeholder="Фамилия"
-                                               style="border-color: var(--lavender-main); border-radius: 10px;">
-                                        <label for="lastName">Фамилия</label>
-                                    </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="lastName" placeholder="Фамилия"
+                                           style="border-color: var(--lavender-main); border-radius: 10px;">
+                                    <label for="lastName">Фамилия</label>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="email" placeholder="Email"
-                                       style="border-color: var(--lavender-main); border-radius: 10px;">
-                                <label for="email">Email</label>
-                            </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" placeholder="Email"
+                                   style="border-color: var(--lavender-main); border-radius: 10px;">
+                            <label for="email">Email</label>
+                        </div>
 
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="password" placeholder="Пароль"
-                                       style="border-color: var(--lavender-main); border-radius: 10px;">
-                                <label for="password">Пароль</label>
-                            </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Пароль"
+                                   style="border-color: var(--lavender-main); border-radius: 10px;">
+                            <label for="password">Пароль</label>
+                        </div>
 
-                            <div class="form-floating mb-4">
-                                <input type="password" class="form-control" id="confirmPassword" placeholder="Подтвердите пароль"
-                                       style="border-color: var(--lavender-main); border-radius: 10px;">
-                                <label for="confirmPassword">Подтвердите пароль</label>
-                            </div>
+                        <div class="form-floating mb-4">
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Подтвердите пароль"
+                                   style="border-color: var(--lavender-main); border-radius: 10px;">
+                            <label for="confirmPassword">Подтвердите пароль</label>
+                        </div>
 
-                            <div class="form-check mb-4">
-                                <input class="form-check-input" type="checkbox" id="newsletter" checked
-                                       style="border-color: var(--lavender-main);">
-                                <label class="form-check-label" for="newsletter">
-                                    Я хочу получать новости и специальные предложения
-                                </label>
-                            </div>
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="newsletter" checked
+                                   style="border-color: var(--lavender-main);">
+                            <label class="form-check-label" for="newsletter">
+                                Я хочу получать новости и специальные предложения
+                            </label>
+                        </div>
 
-                            <button class="btn btn-lavender w-100 py-3 mb-3" type="submit">
-                                <i class="fas fa-user-plus me-2"></i>Создать аккаунт
-                            </button>
+                        <button class="btn btn-lavender w-100 py-3 mb-3" type="submit">
+                            <i class="fas fa-user-plus me-2"></i>Создать аккаунт
+                        </button>
 
-                            <div class="text-center">
-                                <small class="text-muted">
-                                    Уже есть аккаунт? <a href="avtorization.html" style="color: var(--lavender-main);">Войти</a>
-                                </small>
-                            </div>
-                        </form>
+                        <div class="text-center">
+                            <small class="text-muted">
+                                Уже есть аккаунт? <a href="avtorization.html" style="color: var(--lavender-main);">Войти</a>
+                            </small>
+                        </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -84,5 +97,16 @@
             behavior: 'smooth'
         });
     });
-</script>
 
+    function onRegisterSuccess(response) {
+        if (response.success) {
+            window.location.href = response.redirectUrl;
+        } else {
+            $("#registerMessage").html('<div class="alert alert-danger">' + response.message + '</div>');
+        }
+    }
+
+    function onRegisterFailure() {
+        $("#registerMessage").html('<div class="alert alert-danger">Ошибка сети. Попробуйте снова.</div>');
+    }
+</script>

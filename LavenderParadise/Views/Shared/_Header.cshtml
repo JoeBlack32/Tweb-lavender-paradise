@@ -30,15 +30,28 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Registration", "Home")">
-                        <i class="fas fa-shopping-cart"></i>
-                        Корзина
-                    </a>
+                    @if (Session["UserRole"] == null || Session["UserRole"].ToString() == "Guest"){
+                        <a class="nav-link" href="@Url.Action("Registration", "Home")">
+                            <i class="fas fa-shopping-cart"></i>
+                            Корзина
+                        </a>
+                    }
+                    else{
+                        <a class="nav-link" href="@Url.Action("Account", "Home")">
+                            <i class="fas fa-shopping-cart"></i>
+                            Корзина
+                        </a>
+                    }
                 </li>
             </ul>
             <div class="auth-buttons">
-                <a href="@Url.Action("Avtorization", "Home")" class="btn btn-outline-light">Войти</a>
-                <a href="@Url.Action("Registration", "Home")" class="btn btn-light">Регистрация</a>
+                @if (Session["UserRole"] == null || Session["UserRole"].ToString() == "Guest"){
+                    <a href="@Url.Action("Avtorization", "Home")" class="btn btn-outline-light">Войти</a>
+                    <a href="@Url.Action("Registration", "Home")" class="btn btn-light">Регистрация</a>
+                }
+                else{
+                    <a href="@Url.Action("Logout", "Account")">Выход (@Session["UserRole"])</a>
+                }
             </div>
         </div>
     </div>

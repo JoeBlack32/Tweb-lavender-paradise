@@ -28,5 +28,10 @@ namespace Tweb_lavender_paradise.BusinessLogic.BLogic
             }
             return null;
         }
+
+        public List<Product> GetAllProducts()
+        {
+            return products;
+        }
     }
 }

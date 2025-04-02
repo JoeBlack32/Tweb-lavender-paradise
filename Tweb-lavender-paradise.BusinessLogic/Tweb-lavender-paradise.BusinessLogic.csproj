@@ -41,12 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLogic\ProductBL.cs" />
+    <Compile Include="BLogic\AuthServiceBL.cs" />
     <Compile Include="BLogic\ProductServiceBL.cs" />
     <Compile Include="BLogic\UserBL.cs" />
     <Compile Include="BusinessLogic.cs" />
     <Compile Include="Core\User\UserApi.cs" />
-    <Compile Include="Interfaces\IProduct.cs" />
     <Compile Include="Interfaces\IProductService.cs" />
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +60,8 @@
       <Name>Tweb-lavender-paradise.Helper</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

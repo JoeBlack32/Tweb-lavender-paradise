@@ -15,9 +15,6 @@ namespace Tweb_lavender_paradise.BusinessLogic
             return new UserBL();
         }
 
-        public IProduct GetProductBL() { 
-            return new ProductBL();
-        }
     }
 
 }
