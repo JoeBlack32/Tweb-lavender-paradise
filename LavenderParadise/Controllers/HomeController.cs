@@ -4,15 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tweb_lavender_paradise.BusinessLogic;
 using Tweb_lavender_paradise.BusinessLogic.BLogic;
 using Tweb_lavender_paradise.BusinessLogic.Interfaces;
+using Tweb_lavender_paradise.Domain.Enitities.User;
 using Tweb_lavender_paradise.Domain.Models;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 
 namespace LavenderParadise.Controllers
 {
     public class HomeController : Controller
     {
+        public IUser _user;
+        public HomeController()
+        {
+            var bl = new BusinessLogic();
+            _user = bl.GetUserBL();
+
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -118,13 +129,26 @@ namespace LavenderParadise.Controllers
             return View();
         }
 
-        public ActionResult Registration()
-        {
-            return View();
-        }
+ 
 
         public ActionResult Avtorization()
         {
+            return View();
+        }
+        public ActionResult Registration()
+        {
+            var NewUser = new UserDBTable
+            {
+                Email = "poddubnii.roman@gmail.com",
+                Username = "Roman",
+                Password = "password",
+            };
+
+            _user.AddUser(NewUser);
+
+
+            string key = "myKey";
+            bool isValid = _user.IsValidSession(key);
             return View();
         }
     }

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Tweb_lavender_paradise.Domain.Enitities.User
 {
-    internal class UserDBTable
+    public class UserDBTable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

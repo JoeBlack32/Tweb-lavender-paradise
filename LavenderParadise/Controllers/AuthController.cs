@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Tweb_lavender_paradise.BusinessLogic;
 using Tweb_lavender_paradise.BusinessLogic.Interfaces;
 using Tweb_lavender_paradise.BusinessLogic.BLogic;
+using Tweb_lavender_paradise.Domain.Enitities.User;
 
 
 namespace LavenderParadise.Controllers
@@ -13,18 +14,13 @@ namespace LavenderParadise.Controllers
     public class AuthController : Controller
     {
 
-        private readonly IUser _user;
+        public  IUser _user;
         public AuthController()
         {
             var bl = new BusinessLogic();
             _user = bl.GetUserBL();
 
         }
-        public ActionResult Registration()
-        {
-            string key = "myKey";
-            bool isValid = _user.IsValidSession(key);
-            return View();
-        }
+       
     }
 }
