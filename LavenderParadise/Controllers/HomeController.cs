@@ -137,15 +137,6 @@ namespace LavenderParadise.Controllers
         }
         public ActionResult Registration()
         {
-            var NewUser = new UserDBTable
-            {
-                Email = "poddubnii.roman@gmail.com",
-                Username = "Roman",
-                Password = "password",
-            };
-
-            _user.AddUser(NewUser);
-
 
             string key = "myKey";
             bool isValid = _user.IsValidSession(key);

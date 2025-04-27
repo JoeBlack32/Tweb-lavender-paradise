@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,13 +34,23 @@ namespace Tweb_lavender_paradise.BusinessLogic.BLogic
 
         public bool Register(UserModel newUser)
         {
-            if (_users.Any(u => u.Email == newUser.Email))
-                return false; // Email уже используется
+            using (var connection = new SqlConnection("Data Source=LocalHost;Initial Catalog=LavenderParadise;Integrated Security=True;MultipleActiveResultSets=True;App=LavenderParadise"))
+            {
+                connection.Open();
+                var command = new SqlCommand(
+                    "INSERT INTO Users (FirstName, LastName, Email, PasswordHash, Role) " +
+                    "VALUES (@FirstName, @LastName, @Email, @PasswordHash, @Role)", connection);
 
-            newUser.Id = _users.Count + 1;
-            newUser.Role = "User"; // По умолчанию обычный пользователь
-            _users.Add(newUser);
-            return true;
+                command.Parameters.AddWithValue("@FirstName", newUser.FirstName);
+                command.Parameters.AddWithValue("@LastName", newUser.LastName);
+                command.Parameters.AddWithValue("@Email", newUser.Email);
+                command.Parameters.AddWithValue("@PasswordHash", newUser.PasswordHash);
+                command.Parameters.AddWithValue("@Role", "User");
+
+                int result = command.ExecuteNonQuery();
+                return result > 0;
+            }
         }
+
     }
 }
