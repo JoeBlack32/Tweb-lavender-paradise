@@ -22,10 +22,16 @@ namespace LavenderParadise.Controllers
                 Session["UserId"] = user.Id;
                 Session["UserRole"] = user.Role;
 
-                return Json(new { success = true, redirectUrl = Url.Action("Index", "Home") });
+                return Json(new { success = true, redirectUrl = Url.Action("PersonalAccount", "Account") });
             }
 
             return Json(new { success = false, message = "Неверный email или пароль." });
+        }
+
+        [HttpPost]
+        public ActionResult PersonalAccount()
+        {
+            return View(); // Вернёт Views/Account/PersonalAccount.cshtml
         }
 
         [HttpPost]

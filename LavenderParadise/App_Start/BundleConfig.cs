@@ -27,6 +27,8 @@ namespace LavenderParadise
             bundles.Add(new StyleBundle("~/bundles/site/css").Include(
                       "~/Content/site.css"));
 
+            bundles.Add(new StyleBundle("~/bundles/PersonalAccount/css").Include(
+                      "~/Content/PersonalAccount.css"));
 
             BundleTable.EnableOptimizations = false;
 

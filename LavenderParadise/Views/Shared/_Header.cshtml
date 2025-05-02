@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+п»ї<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="index.html">
-            <i class="fas fa-spa me-2"></i>Лавандовый рай
+            <i class="fas fa-spa me-2"></i>Р›Р°РІР°РЅРґРѕРІС‹Р№ СЂР°Р№
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -10,47 +10,47 @@
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Index", "Home")">
-                        <i class="fas fa-home"></i> Главная
+                        <i class="fas fa-home"></i> Р“Р»Р°РІРЅР°СЏ
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Catalog", "Home")">
-                        <i class="fas fa-flask"></i> Каталог
+                        <i class="fas fa-flask"></i> РљР°С‚Р°Р»РѕРі
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("About", "Home")">
-                        <i class="fas fa-leaf"></i> О лаванде
+                        <i class="fas fa-leaf"></i> Рћ Р»Р°РІР°РЅРґРµ
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link scroll-to-contacts" href="#contacts-section">
                         <i class="fas fa-envelope"></i>
-                        Контакты
+                        РљРѕРЅС‚Р°РєС‚С‹
                     </a>
                 </li>
                 <li class="nav-item">
                     @if (Session["UserRole"] == null || Session["UserRole"].ToString() == "Guest"){
                         <a class="nav-link" href="@Url.Action("Registration", "Home")">
                             <i class="fas fa-shopping-cart"></i>
-                            Корзина
+                            РљРѕСЂР·РёРЅР°
                         </a>
                     }
                     else{
                         <a class="nav-link" href="@Url.Action("Account", "Home")">
                             <i class="fas fa-shopping-cart"></i>
-                            Корзина
+                            РљРѕСЂР·РёРЅР°
                         </a>
                     }
                 </li>
             </ul>
             <div class="auth-buttons">
                 @if (Session["UserRole"] == null || Session["UserRole"].ToString() == "Guest"){
-                    <a href="@Url.Action("Avtorization", "Home")" class="btn btn-outline-light">Войти</a>
-                    <a href="@Url.Action("Registration", "Home")" class="btn btn-light">Регистрация</a>
+                    <a href="@Url.Action("Avtorization", "Home")" class="btn btn-outline-light">Р’РѕР№С‚Рё</a>
+                    <a href="@Url.Action("Registration", "Home")" class="btn btn-light">Р РµРіРёСЃС‚СЂР°С†РёСЏ</a>
                 }
                 else{
-                    <a href="@Url.Action("Logout", "Account")">Выход (@Session["UserRole"])</a>
+                    <a href="@Url.Action("Logout", "Account")">Р’С‹С…РѕРґ (@Session["UserRole"])</a>
                 }
             </div>
         </div>
