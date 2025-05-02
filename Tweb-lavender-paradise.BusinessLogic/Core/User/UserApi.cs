@@ -13,9 +13,6 @@ namespace Tweb_lavender_paradise.BusinessLogic.Core.User
 
         public void AddUserApi(UserDBTable data)
         {
-
-
-
             data.LastLogin = DateTime.Now;
             data.LastIp = "0.0.0.0";
             data.Password = "123456789";
