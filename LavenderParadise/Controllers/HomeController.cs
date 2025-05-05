@@ -14,7 +14,7 @@ using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext
 
 namespace LavenderParadise.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public IUser _user;
         public HomeController()
@@ -130,16 +130,12 @@ namespace LavenderParadise.Controllers
         }
 
  
-
         public ActionResult Avtorization()
         {
             return View();
         }
         public ActionResult Registration()
         {
-
-            string key = "myKey";
-            bool isValid = _user.IsValidSession(key);
             return View();
         }
     }

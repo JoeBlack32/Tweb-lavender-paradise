@@ -9,33 +9,46 @@ using Tweb_lavender_paradise.BusinessLogic.BLogic;
 
 namespace LavenderParadise.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly AuthServiceBL _authService = new AuthServiceBL();
 
         [HttpPost]
-        public JsonResult Login(string email, string password)
+        public ActionResult Login(string email, string password)
         {
             var user = _authService.Authenticate(email, password);
             if (user != null)
             {
-                Session["UserId"] = user.Id;
-                Session["UserRole"] = user.Role;
+                Session["User"] = user;
 
-                return Json(new { success = true, redirectUrl = Url.Action("PersonalAccount", "Account") });
+                if (user.Role.ToLower() == "admin")
+                    return RedirectToAction("AdminPanel", "Admin");
+
+                return RedirectToAction("PersonalAccount", "Account");
             }
 
-            return Json(new { success = false, message = "Неверный email или пароль." });
+            ViewBag.ErrorMessage = "Неверный email или пароль.";
+            return View("Avtorization"); // Перерисовываем страницу с ошибкой
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult PersonalAccount()
         {
-            return View(); // Вернёт Views/Account/PersonalAccount.cshtml
+            var user = HttpContext.Session["User"];
+            if (user == null)
+                return RedirectToAction("Login");
+
+            return View(user); // передаём данные пользователя
         }
 
+        //[HttpPost]
+        //public ActionResult PersonalAccount()
+        //{
+        //    return View(); // Вернёт Views/Account/PersonalAccount.cshtml
+        //}
+
         [HttpPost]
-        public JsonResult Register(string firstName, string lastName, string email, string password)
+        public ActionResult Register(string firstName, string lastName, string email, string password)
         {
             var newUser = new UserModel
             {
@@ -44,10 +57,11 @@ namespace LavenderParadise.Controllers
                 Email = email,
                 PasswordHash = password
             };
-
-            if (_authService.Register(newUser))
+            newUser = _authService.Register(newUser);
+            if (newUser != null)
             {
-                return Json(new { success = true, redirectUrl = Url.Action("Login") });
+                Session["User"] = newUser;
+                return RedirectToAction("PersonalAccount", "Account");
             }
 
             return Json(new { success = false, message = "Пользователь с таким email уже зарегистрирован." });

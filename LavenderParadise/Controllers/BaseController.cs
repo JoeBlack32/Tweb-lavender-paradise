@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tweb_lavender_paradise.Domain.Models;
 
 namespace LavenderParadise.Controllers
 {
@@ -10,9 +11,16 @@ namespace LavenderParadise.Controllers
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var userRole = Session["UserRole"] as string ?? "Guest"; // Если нет сессии, то гость
-            ViewBag.UserRole = userRole;
             base.OnActionExecuting(filterContext);
+
+            if (Session["User"] is UserModel user)
+            {
+                ViewBag.User = user;
+            }
+            else
+            {
+                ViewBag.User = null;
+            }
         }
     }
 }
