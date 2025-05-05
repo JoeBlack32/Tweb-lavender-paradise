@@ -7,8 +7,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     @Styles.Render("~/bundles/bootstrap/css")
 
-    @if(IsSectionDefined("Styles")){
-    @RenderSection("Styles", required:false)
+    @if (IsSectionDefined("Styles"))
+    {
+        @RenderSection("Styles", required: false)
     }
 
     @Styles.Render("~/bundles/site/css")

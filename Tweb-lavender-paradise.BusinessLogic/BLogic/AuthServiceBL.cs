@@ -1,40 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tweb_lavender_paradise.Domain.Enitities.User;
 using Tweb_lavender_paradise.Domain.Models;
 
 namespace Tweb_lavender_paradise.BusinessLogic.BLogic
 {
     public class AuthServiceBL
     {
-        private readonly List<UserModel> _users = new List<UserModel>
-        {
-            new UserModel { Id = 1, FirstName = "Admin", LastName = "Slava", Email = "admin@example.com", PasswordHash = "hashed_password", Role = "Admin" },
-            new UserModel { Id = 2, FirstName = "User", LastName = "Slava", Email = "user@example.com", PasswordHash = "hashed_password", Role = "User" }
-        };
+        private readonly string _connectionString = "Data Source=LocalHost;Initial Catalog=LavenderParadise;Integrated Security=True;MultipleActiveResultSets=True;App=LavenderParadise";
 
         public UserModel Authenticate(string email, string password)
         {
-            var user = _users.FirstOrDefault(u => u.Email == email);
-            if (user != null && VerifyPassword(password, user.PasswordHash))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                return user;
+                connection.Open();
+                var command = new SqlCommand("SELECT Id, FirstName, LastName, Email, PasswordHash, Role FROM Users WHERE Email = @Email", connection);
+                command.Parameters.AddWithValue("@Email", email);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        string storedHash = reader["PasswordHash"] != DBNull.Value ? reader["PasswordHash"].ToString() : "";
+
+                        if (VerifyPassword(password, storedHash))
+                        {
+                            var user = new UserModel
+                            {
+                                Id = reader["Id"] != DBNull.Value ? Convert.ToInt32(reader["Id"]) : 0,
+                                FirstName = reader["FirstName"] != DBNull.Value ? reader["FirstName"].ToString() : "",
+                                LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : "",
+                                Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : "",
+                                PasswordHash = storedHash,
+                                Role = reader["Role"] != DBNull.Value ? reader["Role"].ToString() : "User"
+                            };
+                            return user;
+                        }
+                    }
+                }
             }
+
             return null;
         }
 
         private bool VerifyPassword(string password, string storedHash)
         {
-            // Логика проверки пароля (bcrypt или другой хеш)
+            // Заменить на bcrypt/argon2 проверку при необходимости
             return password == storedHash;
         }
 
-        public bool Register(UserModel newUser)
+        public UserModel Register(UserModel newUser)
         {
-            using (var connection = new SqlConnection("Data Source=LocalHost;Initial Catalog=LavenderParadise;Integrated Security=True;MultipleActiveResultSets=True;App=LavenderParadise"))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 var command = new SqlCommand(
@@ -48,9 +65,12 @@ namespace Tweb_lavender_paradise.BusinessLogic.BLogic
                 command.Parameters.AddWithValue("@Role", "User");
 
                 int result = command.ExecuteNonQuery();
-                return result > 0;
+                if (result > 0)
+                {
+                    return newUser;
+                }
+                else return null;
             }
         }
-
     }
 }

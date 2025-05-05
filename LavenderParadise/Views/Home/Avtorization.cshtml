@@ -21,13 +21,7 @@
                         </div>
 
                         <div id="loginMessage"></div>
-                        @using (Ajax.BeginForm("PersonalAccount", "Account", new AjaxOptions
-                        {
-                            HttpMethod = "POST",
-                            OnSuccess = "onLoginSuccess",
-                            OnFailure = "onLoginFailure",
-                            UpdateTargetId = "loginMessage"
-                        }))
+                        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                         {
                             <div class="form-floating mb-3">
                                 <input type="email" name="email" class="form-control" id="email" placeholder="Email"
@@ -55,7 +49,7 @@
 
                             <div class="text-center">
                                 <small class="text-muted">
-                                    Нет аккаунта? <a href="registration.html" style="color: var(--lavender-main);">Зарегистрироваться</a>
+                                    Нет аккаунта? <a href="@Url.Action("Register", "Home")" style="color: var(--lavender-main);">Зарегистрироваться</a>
                                 </small>
                             </div>
                         }

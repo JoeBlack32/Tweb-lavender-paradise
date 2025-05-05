@@ -1,4 +1,6 @@
-﻿<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+﻿@model Tweb_lavender_paradise.Domain.Models.UserModel
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="@Url.Action("Index", "Home")">
             <i class="fas fa-spa me-2"></i>Лавандовый рай
@@ -6,6 +8,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
@@ -25,32 +28,39 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link scroll-to-contacts" href="#contacts-section">
-                        <i class="fas fa-envelope"></i>
-                        Контакты
+                        <i class="fas fa-envelope"></i> Контакты
                     </a>
                 </li>
                 <li class="nav-item">
-                    @if (Session["UserRole"] == null || Session["UserRole"].ToString() == "Guest"){
+                    @if (Model == null || string.IsNullOrEmpty(Model.Role) || Model.Role == "Guest")
+                    {
                         <a class="nav-link" href="@Url.Action("Registration", "Home")">
-                            <i class="fas fa-shopping-cart"></i>
-                            Корзина
+                            <i class="fas fa-shopping-cart"></i> Корзина
                         </a>
                     }
-                    else{
+                    else
+                    {
                         <a class="nav-link" href="@Url.Action("Account", "Home")">
-                            <i class="fas fa-shopping-cart"></i>
-                            Корзина
+                            <i class="fas fa-shopping-cart"></i> Корзина
                         </a>
                     }
                 </li>
             </ul>
+
             <div class="auth-buttons">
-                @if (Session["UserRole"] == null || Session["UserRole"].ToString() == "Guest"){
+                @if (Model == null || string.IsNullOrEmpty(Model.Role) || Model.Role == "Guest")
+                {
                     <a href="@Url.Action("Avtorization", "Home")" class="btn btn-outline-light">Войти</a>
                     <a href="@Url.Action("Registration", "Home")" class="btn btn-light">Регистрация</a>
                 }
-                else{
-                    <a href="@Url.Action("Logout", "Account")">Выход (@Session["UserRole"])</a>
+                else if (Model.Role == "Admin")
+                {
+                    <a href="@Url.Action("AdminPanel", "Admin")" class="btn btn-warning me-2">Админ панель</a>
+                    <a href="@Url.Action("PersonalAccount", "Account")" class="btn btn-light">Личный Кабинет (Админ)</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("PersonalAccount", "Account")" class="btn btn-light">Личный Кабинет</a>
                 }
             </div>
         </div>

@@ -1,0 +1,338 @@
+﻿
+@{
+    ViewBag.Title = "AdminPanel";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model List<Tweb_lavender_paradise.Domain.Models.UserModel>
+@{
+    var admins = Model.Where(u => u.Role == "Admin").ToList();
+    var regulars = Model.Where(u => u.Role == "Regular").ToList();
+    var users = Model.Where(u => u.Role == "User").ToList();
+}
+
+<style>
+    .role-admin {
+        background-color: #9BB8FF;
+        color: #1c3d72;
+    }
+
+    .role-regular {
+        background-color: #B5FF9B;
+        color: #1c721f;
+    }
+
+    .role-user {
+        background-color: #B5FF9B;
+        color: #1c721f;
+    }
+
+    .section-title {
+        background-color: var(--lavender-light);
+        padding: 1rem;
+        margin: 2rem 0;
+        border-radius: 10px;
+        color: var(--lavender-dark);
+        font-weight: bold;
+    }
+
+    .user-avatar {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin: 1rem auto;
+    }
+
+    .special-button {
+        background-color: var(--lavender-dark);
+        color: white;
+        font-weight: bold;
+        border: 2px solid var(--lavender-main);
+    }
+
+        .special-button:hover {
+            background-color: var(--lavender-main);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .delete-button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+    }
+
+        .delete-button:hover {
+            background-color: #c82333;
+            color: white;
+        }
+</style>
+
+<section class="py-5 bg-light" style="margin-top: 80px;">
+    <div class="container">
+        <h2 class="text-center mb-5">Управление пользователями</h2>
+
+        <!-- Секция администраторов -->
+        <div class="section-title">
+            <i class="fas fa-user-shield me-2"></i>Администраторы
+        </div>
+        <div class="row mb-5">
+            @foreach (var admin in admins)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <div class="text-center">
+                            <img src="" class="user-avatar" alt="Администратор">
+                            <span class="badge role-admin mb-2">Администратор</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">@($"{admin.FirstName} {admin.LastName}")</h5>
+                            <p class="card-text text-center">@admin.Email</p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-lavender" onclick="showEditUserModal('@admin.Id')">Изменить личные данные</button>
+                                <button class="btn btn-lavender" onclick="showPasswordModal('@admin.Id')">Изменить пароль</button>
+                                <button class="btn btn-lavender" onclick="showAvatarModal('@admin.Id')">Изменить аватар</button>
+                                <button class="btn special-button" onclick="showRoleModal('@admin.Id')">Настроить роль</button>
+                                <button class="btn delete-button" onclick="confirmDeleteUser('@admin.FirstName @admin.LastName')">Удалить аккаунт</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <!-- Секция постоянных пользователей -->
+        <div class="section-title">
+            <i class="fas fa-star me-2"></i>Постоянные пользователи
+        </div>
+        <div class="row mb-5">
+            @foreach (var reg in regulars)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <div class="text-center">
+                            <img src="" class="user-avatar" alt="Пользователь">
+                            <span class="badge role-regular mb-2">Постоянный пользователь</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">@($"{reg.FirstName} {reg.LastName}")</h5>
+                            <p class="card-text text-center">@reg.Email</p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-lavender" onclick="showEditUserModal('@reg.Id')">Изменить личные данные</button>
+                                <button class="btn btn-lavender" onclick="showPasswordModal('@reg.Id')">Изменить пароль</button>
+                                <button class="btn btn-lavender" onclick="showAvatarModal('@reg.Id')">Изменить аватар</button>
+                                <button class="btn special-button" onclick="showRoleModal('@reg.Id')">Настроить роль</button>
+                                <button class="btn delete-button" onclick="confirmDeleteUser('@reg.FirstName @reg.LastName')">Удалить аккаунт</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <!-- Секция обычных пользователей -->
+        <div class="section-title">
+            <i class="fas fa-users me-2"></i>Пользователи
+        </div>
+        <div class="row">
+            @foreach (var user in users)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <div class="text-center">
+                            <img src="" class="user-avatar" alt="Пользователь">
+                            <span class="badge role-user mb-2">Пользователь</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">@($"{user.FirstName} {user.LastName}")</h5>
+                            <p class="card-text text-center">@user.Email</p>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-lavender" onclick="showEditUserModal('@user.Id')">Изменить личные данные</button>
+                                <button class="btn btn-lavender" onclick="showPasswordModal('@user.Id')">Изменить пароль</button>
+                                <button class="btn btn-lavender" onclick="showAvatarModal('@user.Id')">Изменить аватар</button>
+                                <button class="btn special-button" onclick="showRoleModal('@user.Id')">Настроить роль</button>
+                                <button class="btn delete-button" onclick="confirmDeleteUser('@user.FirstName @user.LastName')">Удалить аккаунт</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+</section>
+
+<!-- Модальные окна остаются теми же, но обновляем окно выбора роли -->
+<div class="modal fade" id="roleModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Изменение роли пользователя</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="roleForm">
+                    <div class="mb-3">
+                        <label for="userRole" class="form-label">Выберите роль</label>
+                        <select class="form-select" id="userRole" required>
+                            <option value="user">Пользователь</option>
+                            <option value="regular">Постоянный пользователь</option>
+                            <option value="admin">Администратор</option>
+                        </select>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn special-button">Изменить роль</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно редактирования данных пользователя -->
+<div class="modal fade" id="editUserModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Редактирование данных пользователя</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm">
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">Имя</label>
+                        <input type="text" class="form-control" id="userName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userSurname" class="form-label">Фамилия</label>
+                        <input type="text" class="form-control" id="userSurname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="userEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="userEmail" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-lavender">Сохранить изменения</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно изменения пароля -->
+<div class="modal fade" id="passwordModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Изменение пароля</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="passwordForm">
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">Новый пароль</label>
+                        <input type="password" class="form-control" id="newPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Подтвердите пароль</label>
+                        <input type="password" class="form-control" id="confirmPassword" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-lavender">Изменить пароль</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Модальное окно подтверждения удаления -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Подтверждение удаления</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите удалить аккаунт пользователя "<span id="deleteUserName"></span>"?</p>
+                <p class="text-danger">Это действие нельзя будет отменить.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-danger" onclick="deleteUser()">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Функции для показа модальных окон
+    function showEditUserModal(userId) {
+        const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
+        modal.show();
+    }
+
+    function showPasswordModal(userId) {
+        const modal = new bootstrap.Modal(document.getElementById('passwordModal'));
+        modal.show();
+    }
+
+    function showAvatarModal(userId) {
+
+    }
+
+    function showRoleModal(userId) {
+        const modal = new bootstrap.Modal(document.getElementById('roleModal'));
+        modal.show();
+    }
+
+    function confirmDeleteUser(userName) {
+        const modal = new bootstrap.Modal(document.getElementById('deleteUserModal'));
+        document.getElementById('deleteUserName').textContent = userName;
+        modal.show();
+    }
+
+    function deleteUser() {
+        const userName = document.getElementById('deleteUserName').textContent;
+        console.log('Удаление пользователя:', userName);
+        // Здесь будет код для удаления пользователя
+        bootstrap.Modal.getInstance(document.getElementById('deleteUserModal')).hide();
+    }
+
+    // Обработчики форм
+    document.getElementById('editUserForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Код для сохранения изменений
+        bootstrap.Modal.getInstance(document.getElementById('editUserModal')).hide();
+    });
+
+    document.getElementById('passwordForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Код для изменения пароля
+        bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
+    });
+
+    document.getElementById('roleForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Код для изменения роли
+        bootstrap.Modal.getInstance(document.getElementById('roleModal')).hide();
+    });
+</script>
+
+<script>
+    document.querySelector('.scroll-to-contacts').addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector('#contacts-section').scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+</script>
