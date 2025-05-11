@@ -16,7 +16,7 @@ namespace Tweb_lavender_paradise.BusinessLogic.Core.User
             data.LastLogin = DateTime.Now;
             data.LastIp = "0.0.0.0";
             data.Password = "123456789";
-            data.Level = URole.User;
+            data.Role = URole.User;
             using (var db = new UserContext()) {
             db.Users.Add(data);
                 db.SaveChanges();

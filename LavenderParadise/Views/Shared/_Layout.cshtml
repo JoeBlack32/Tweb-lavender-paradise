@@ -15,7 +15,9 @@
 
 </head>
 <body>
-    @{ Html.RenderPartial("_Header", (object)ViewBag.User); }
+    @{
+      Html.RenderPartial("_Header", (object)ViewBag.User);
+    }
 
     @RenderBody()
 

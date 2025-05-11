@@ -14,15 +14,19 @@ namespace Tweb_lavender_paradise.Domain.Enitities.User
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public int Id { get; set; }
-
         
         [Required]
-        [Display(Name = "Username")]
+        [Display(Name = "FirstName")]
         [StringLength(30, MinimumLength = 5, ErrorMessage = "Username cannot be longer than 30 characters.")]
-        public string Username { get; set; }
+        public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Password")]
+        [Display(Name = "LastName")]
+        [StringLength(30, MinimumLength = 5, ErrorMessage = "Username cannot be longer than 30 characters.")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "PasswordHash")]
         [StringLength(50, MinimumLength = 8, ErrorMessage = "Password cannot be shorter than 8 characters.")]
         public string Password { get; set; }
 
@@ -38,6 +42,6 @@ namespace Tweb_lavender_paradise.Domain.Enitities.User
         public string LastIp { get; set; }
 
         // Здесь вам нужно определить класс URole или использовать enum
-        public URole Level { get; set; }
+        public URole Role { get; set; }
     }
 }

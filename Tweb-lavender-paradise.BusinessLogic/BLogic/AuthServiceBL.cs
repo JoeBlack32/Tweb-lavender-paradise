@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Linq;
+using Tweb_lavender_paradise.BusinessLogic.DBModel;
 using Tweb_lavender_paradise.Domain.Enitities.User;
 using Tweb_lavender_paradise.Domain.Models;
 
@@ -43,6 +45,36 @@ namespace Tweb_lavender_paradise.BusinessLogic.BLogic
             return null;
         }
 
+        //public UserModel Authenticate(string email, string password)
+        //{
+        //    using (var db = new UserContext())
+        //    {
+        //        // Найдём пользователя по email
+        //        var userEntity = db.Users.FirstOrDefault(u => u.Email == email);
+
+        //        if (userEntity != null)
+        //        {
+        //            string storedHash = userEntity.Password ?? "";
+
+        //            if (VerifyPassword(password, storedHash))
+        //            {
+        //                return new UserModel
+        //                {
+        //                    Id = userEntity.Id,
+        //                    FirstName = userEntity.FirstName,
+        //                    LastName = userEntity.LastName,
+        //                    Email = userEntity.Email,
+        //                    PasswordHash = storedHash,
+        //                    Role = userEntity.Role.ToString() // если Level — это enum URole
+        //                };
+        //            }
+        //        }
+        //    }
+
+        //    return null;
+        //}
+
+
         private bool VerifyPassword(string password, string storedHash)
         {
             // Заменить на bcrypt/argon2 проверку при необходимости
@@ -72,5 +104,28 @@ namespace Tweb_lavender_paradise.BusinessLogic.BLogic
                 else return null;
             }
         }
+        //public UserModel Register(UserModel newUser)
+        //{
+        //    using (var db = new UserContext())
+        //    {
+        //        var userEntity = new UserDBTable
+        //        {
+        //            FirstName = newUser.FirstName,
+        //            LastName = newUser.LastName,
+        //            Email = newUser.Email,
+        //            Password = newUser.PasswordHash, // если это то же самое поле
+        //            Role = URole.User,              // Enum User Role
+        //            LastLogin = DateTime.Now,
+        //            LastIp = "0.0.0.0"
+        //        };
+
+        //        db.Users.Add(userEntity);
+        //        db.SaveChanges();
+
+        //        // Если SaveChanges() успешно, можно вернуть newUser
+        //        return newUser;
+        //    }
+        //}
+
     }
 }

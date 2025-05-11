@@ -1,6 +1,7 @@
 ﻿using LavenderParadise.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -24,6 +25,9 @@ namespace LavenderParadise.Controllers
 
         }
 
+        private readonly IProductService _productService;
+        private readonly string _connectionString = "Data Source=LocalHost;Initial Catalog=LavenderParadise;Integrated Security=True;MultipleActiveResultSets=True;App=LavenderParadise";
+
         public ActionResult Index()
         {
             return View();
@@ -31,98 +35,36 @@ namespace LavenderParadise.Controllers
 
         public ActionResult Catalog()
         {
-            List<Product> goods = new List<Product>{
-                new Product { 
-                    GoodName = "Эфирное масло лаванды", 
-                    GoodCode = 1, 
-                    GoodDescription = "Натуральный продукт с лавандой", 
-                    GoodPrice = 1200, 
-                    ImgSrc="../src/img/maslo-lovaadi.jpg",
-                    Category = "Aromatherapy"
-                
-                },
-                new Product { 
-                    GoodName = "Лавандовый чай", 
-                    GoodCode = 2, 
-                    GoodDescription = "Ароматный травяной чай", 
-                    GoodPrice = 800,
-                    ImgSrc="../src/img/chai.jpg",
-                    Category = "Aromatherapy"
+            var goods = new List<Product>();
 
-                },
-                new Product { 
-                    GoodName = "Мыло с лавандой", 
-                    GoodCode = 3, 
-                    GoodDescription = "Натуральное мыло ручной работы", 
-                    GoodPrice = 500,
-                    ImgSrc="../src/img/milo.jpg",
-                    Category = "Aromatherapy"
-                },
-                new Product { GoodName = "Мыло с лавандой", 
-                    GoodCode = 4, 
-                    GoodDescription = "Натуральное мыло ручной работы", 
-                    GoodPrice = 500, 
-                    ImgSrc = "../src/img/milo.jpg", 
-                    Category = "Body Care" 
-                },
-                new Product { 
-                    GoodName = "Соль для ванны", 
-                    GoodCode = 5, 
-                    GoodDescription = "Ароматная соль с лавандой", 
-                    GoodPrice = 850, 
-                    ImgSrc = "../src/img/soli.jpg", 
-                    Category = "Body Care"
-                },
-                new Product { GoodName = "Лавандовый крем", 
-                    GoodCode = 6, 
-                    GoodDescription = "Натуральный увлажняющий крем", 
-                    GoodPrice = 1250, 
-                    ImgSrc = "../src/img/krem.jpg", 
-                    Category = "Body Care"
-                },
-                new Product { 
-                    GoodName = "Свеча с лавандой", 
-                    GoodCode = 7, 
-                    GoodDescription = "Ароматическая свеча", 
-                    GoodPrice = 750, 
-                    ImgSrc = "../src/img/svechka.jpg", 
-                    Category = "For Home and Rest"
-                },
-                new Product { 
-                    GoodName = "Саше с лавандой", 
-                    GoodCode = 8, 
-                    GoodDescription = "Ароматическое саше", 
-                    GoodPrice = 300, 
-                    ImgSrc = "../src/img/sahe.jpg", 
-                    Category = "For Home and Rest"
-                },
-                new Product { 
-                    GoodName = "Ароматический спрей", 
-                    GoodCode = 9, 
-                    GoodDescription = "Спрей для дома", 
-                    GoodPrice = 900, 
-                    ImgSrc = "../src/img/dva-sprei.jpg", 
-                    Category = "For Home and Rest"
-                },
-                new Product { 
-                    GoodName = "Чай с лавандой", 
-                    GoodCode = 10, 
-                    GoodDescription = "Травяной чай", 
-                    GoodPrice = 600, 
-                    ImgSrc = "../src/img/chai.jpg", 
-                    Category = "Products for Consuming" 
-                },
-                new Product { 
-                    GoodName = "Мёд с лавандой", 
-                    GoodCode = 11, 
-                    GoodDescription = "Натуральный мёд", 
-                    GoodPrice = 1400, 
-                    ImgSrc = "../src/img/med.jpg", 
-                    Category = "Products for Consuming"
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var command = new SqlCommand("SELECT GoodName, GoodCode, GoodDescription, GoodPrice, ImgSrc, Category FROM Product", connection);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var product = new Product
+                        {
+                            GoodName = reader["GoodName"]?.ToString(),
+                            GoodCode = reader["GoodCode"] != DBNull.Value ? Convert.ToInt32(reader["GoodCode"]) : 0,
+                            GoodDescription = reader["GoodDescription"]?.ToString(),
+                            GoodPrice = reader["GoodPrice"] != DBNull.Value ? Convert.ToDecimal(reader["GoodPrice"]) : 0,
+                            ImgSrc = reader["ImgSrc"]?.ToString(),
+                            Category = reader["Category"]?.ToString()
+                        };
+
+                        goods.Add(product);
+                    }
                 }
-            };
+            }
+
             return View(goods);
         }
+
 
         public ActionResult About()
         {

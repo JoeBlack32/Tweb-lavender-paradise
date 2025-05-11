@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Enitities\User\URole.cs" />
     <Compile Include="Enitities\User\UserDBTable.cs" />
+    <Compile Include="Models\CatalogModel.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
