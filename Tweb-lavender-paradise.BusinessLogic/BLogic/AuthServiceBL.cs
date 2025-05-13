@@ -16,7 +16,7 @@ namespace Tweb_lavender_paradise.BusinessLogic.BLogic
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                var command = new SqlCommand("SELECT Id, FirstName, LastName, Email, PasswordHash, Role FROM Users WHERE Email = @Email", connection);
+                var command = new SqlCommand("SELECT Id, FirstName, LastName, Email, PasswordHash, AvatarPath, Role FROM Users WHERE Email = @Email", connection);
                 command.Parameters.AddWithValue("@Email", email);
 
                 using (var reader = command.ExecuteReader())
@@ -34,7 +34,9 @@ namespace Tweb_lavender_paradise.BusinessLogic.BLogic
                                 LastName = reader["LastName"] != DBNull.Value ? reader["LastName"].ToString() : "",
                                 Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : "",
                                 PasswordHash = storedHash,
-                                Role = reader["Role"] != DBNull.Value ? reader["Role"].ToString() : "User"
+                                Role = reader["Role"] != DBNull.Value ? reader["Role"].ToString() : "User",
+                                AvatarPath = reader["AvatarPath"] != DBNull.Value ? reader["AvatarPath"].ToString() : "",
+
                             };
                             return user;
                         }

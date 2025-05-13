@@ -17,5 +17,6 @@ namespace Tweb_lavender_paradise.Domain.Models
         public string PasswordHash { get; set; } // Храним хеш пароля
         public string Role { get; set; } // "Guest", "User", "Admin"
         public Product SingleProduct { get; set; }
+        public string AvatarPath { get; set; }
     }
 }
