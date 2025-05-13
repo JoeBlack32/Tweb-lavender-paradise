@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -28,7 +29,7 @@ namespace LavenderParadise.Controllers
             {
                 connection.Open();
 
-                var command = new SqlCommand("SELECT Id, FirstName, LastName, Email, PasswordHash, Role FROM Users", connection);
+                var command = new SqlCommand("SELECT Id, FirstName, LastName, Email, PasswordHash, AvatarPath, Role FROM Users", connection);
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -42,6 +43,7 @@ namespace LavenderParadise.Controllers
                             Email = reader["Email"]?.ToString(),
                             PasswordHash = reader["PasswordHash"]?.ToString(),
                             Role = reader["Role"]?.ToString(),
+                            AvatarPath = reader["AvatarPath"]?.ToString()
                         };
 
                         users.Add(user1);
@@ -52,6 +54,88 @@ namespace LavenderParadise.Controllers
             return View(users);
         }
 
+        [HttpPost]
+        public ActionResult UpdateUser(int id, string firstName, string lastName, string email)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand("UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Email=@Email WHERE Id=@Id", connection);
+                command.Parameters.AddWithValue("@Id", id);
+                command.Parameters.AddWithValue("@FirstName", firstName);
+                command.Parameters.AddWithValue("@LastName", lastName);
+                command.Parameters.AddWithValue("@Email", email);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            return RedirectToAction("AdminPanel");
+        }
+        [HttpPost]
+        public ActionResult UpdatePassword(int id, string newPassword)
+        {
+            string hash = HashPassword(newPassword); // реализуйте хеширование
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand("UPDATE Users SET PasswordHash=@PasswordHash WHERE Id=@Id", connection);
+                command.Parameters.AddWithValue("@Id", id);
+                command.Parameters.AddWithValue("@PasswordHash", hash);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            return RedirectToAction("AdminPanel");
+        }
+
+        private string HashPassword(string newPassword)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        public ActionResult UpdateAvatar(int id, HttpPostedFileBase avatar)
+        {
+            if (avatar != null && avatar.ContentLength > 0)
+            {
+                string fileName = Path.GetFileName(avatar.FileName);
+                string path = Path.Combine(Server.MapPath("../src/Avatars"), fileName);
+                avatar.SaveAs(path);
+
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    var command = new SqlCommand("UPDATE Users SET AvatarPath=@Path WHERE Id=@Id", connection);
+                    command.Parameters.AddWithValue("@Id", id);
+                    command.Parameters.AddWithValue("@Path", fileName);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            return RedirectToAction("AdminPanel");
+        }
+        [HttpPost]
+        public ActionResult UpdateRole(int id, string newRole)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand("UPDATE Users SET Role=@Role WHERE Id=@Id", connection);
+                command.Parameters.AddWithValue("@Id", id);
+                command.Parameters.AddWithValue("@Role", newRole);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            return RedirectToAction("AdminPanel");
+        }
+        [HttpPost]
+        public ActionResult DeleteUser(int id)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand("DELETE FROM Users WHERE Id=@Id", connection);
+                command.Parameters.AddWithValue("@Id", id);
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            return RedirectToAction("AdminPanel");
+        }
 
     }
 }

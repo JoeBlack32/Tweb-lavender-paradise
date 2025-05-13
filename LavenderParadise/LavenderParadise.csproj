@@ -148,6 +148,8 @@
     </Compile>
     <Compile Include="Models\GoodsCard.cs" />
     <Compile Include="Models\UserData.cs" />
+    <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="obj\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -171,12 +173,20 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="obj\Debug\LavenderParadise.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\LavenderParadise.dll" />
+    <Content Include="obj\Debug\LavenderParadise.pdb" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\Lavender.D481CA73.Up2Date" />
+    <Content Include="obj\Debug\LavenderParadise.csproj.AssemblyReference.cache" />
+    <Content Include="obj\Debug\LavenderParadise.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Release\LavenderParadise.csproj.AssemblyReference.cache" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -188,6 +198,23 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="src\Avatars\admin.jpg" />
+    <Content Include="src\Avatars\post.jfif" />
+    <Content Include="src\Avatars\user.jfif" />
+    <Content Include="src\img\1.jpg" />
+    <Content Include="src\img\chai.jpg" />
+    <Content Include="src\img\dva-sprei.jpg" />
+    <Content Include="src\img\for-face.png" />
+    <Content Include="src\img\krem.jpg" />
+    <Content Include="src\img\maslo-dly-litsa.jpg" />
+    <Content Include="src\img\maslo-lovaadi.jpg" />
+    <Content Include="src\img\massaj-maslo.jpg" />
+    <Content Include="src\img\med.jpg" />
+    <Content Include="src\img\milo.jpg" />
+    <Content Include="src\img\sahe.jpg" />
+    <Content Include="src\img\soli.jpg" />
+    <Content Include="src\img\sprei.jpg" />
+    <Content Include="src\img\svechka.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -216,7 +243,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="src\" />
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

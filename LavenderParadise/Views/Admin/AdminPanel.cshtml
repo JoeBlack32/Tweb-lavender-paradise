@@ -83,7 +83,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="product-card">
                         <div class="text-center">
-                            <img src="" class="user-avatar" alt="Администратор">
+                            <img src="@($"../src/Avatars/{admin.AvatarPath}")" class="user-avatar" alt="Пользователь">
                             <span class="badge role-admin mb-2">Администратор</span>
                         </div>
                         <div class="card-body">
@@ -94,7 +94,7 @@
                                 <button class="btn btn-lavender" onclick="showPasswordModal('@admin.Id')">Изменить пароль</button>
                                 <button class="btn btn-lavender" onclick="showAvatarModal('@admin.Id')">Изменить аватар</button>
                                 <button class="btn special-button" onclick="showRoleModal('@admin.Id')">Настроить роль</button>
-                                <button class="btn delete-button" onclick="confirmDeleteUser('@admin.FirstName @admin.LastName')">Удалить аккаунт</button>
+                                <button class="btn special-button" onclick="confirmDeleteUser('@($"{admin.FirstName} {admin.LastName}")', @admin.Id)"> Удалить аккаунт </button>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="product-card">
                         <div class="text-center">
-                            <img src="" class="user-avatar" alt="Пользователь">
+                            <img src="@($"../src/Avatars/{reg.AvatarPath}")" class="user-avatar" alt="Пользователь">
                             <span class="badge role-regular mb-2">Постоянный пользователь</span>
                         </div>
                         <div class="card-body">
@@ -124,7 +124,7 @@
                                 <button class="btn btn-lavender" onclick="showPasswordModal('@reg.Id')">Изменить пароль</button>
                                 <button class="btn btn-lavender" onclick="showAvatarModal('@reg.Id')">Изменить аватар</button>
                                 <button class="btn special-button" onclick="showRoleModal('@reg.Id')">Настроить роль</button>
-                                <button class="btn delete-button" onclick="confirmDeleteUser('@reg.FirstName @reg.LastName')">Удалить аккаунт</button>
+                                <button class="btn special-button" onclick="confirmDeleteUser('@($"{reg.FirstName} {reg.LastName}")', @reg.Id)"> Удалить аккаунт </button>
                             </div>
                         </div>
                     </div>
@@ -143,7 +143,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="product-card">
                         <div class="text-center">
-                            <img src="" class="user-avatar" alt="Пользователь">
+                            <img src="@($"../src/Avatars/{user.AvatarPath}")" class="user-avatar" alt="Пользователь">
                             <span class="badge role-user mb-2">Пользователь</span>
                         </div>
                         <div class="card-body">
@@ -154,7 +154,7 @@
                                 <button class="btn btn-lavender" onclick="showPasswordModal('@user.Id')">Изменить пароль</button>
                                 <button class="btn btn-lavender" onclick="showAvatarModal('@user.Id')">Изменить аватар</button>
                                 <button class="btn special-button" onclick="showRoleModal('@user.Id')">Настроить роль</button>
-                                <button class="btn delete-button" onclick="confirmDeleteUser('@user.FirstName @user.LastName')">Удалить аккаунт</button>
+                                <button class="btn special-button" onclick="confirmDeleteUser('@($"{user.FirstName} {user.LastName}")', @user.Id)"> Удалить аккаунт </button>
                             </div>
                         </div>
                     </div>
@@ -166,109 +166,137 @@
 </section>
 
 <!-- Модальные окна остаются теми же, но обновляем окно выбора роли -->
-<div class="modal fade" id="roleModal" tabindex="-1">
+<div class="modal fade" id="roleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Изменение роли пользователя</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="roleForm">
+        @using (Html.BeginForm("UpdateRole", "Admin", FormMethod.Post))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Настроить роль</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="roleUserId" />
                     <div class="mb-3">
-                        <label for="userRole" class="form-label">Выберите роль</label>
-                        <select class="form-select" id="userRole" required>
-                            <option value="user">Пользователь</option>
-                            <option value="regular">Постоянный пользователь</option>
-                            <option value="admin">Администратор</option>
+                        <label class="form-label">Выберите роль</label>
+                        <select name="newRole" class="form-select" required>
+                            <option value="User">Обычный пользователь</option>
+                            <option value="Regular">Постоянный пользователь</option>
+                            <option value="Admin">Администратор</option>
                         </select>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn special-button">Изменить роль</button>
-                    </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
             </div>
-        </div>
+        }
     </div>
 </div>
 
 <!-- Модальное окно редактирования данных пользователя -->
-<div class="modal fade" id="editUserModal" tabindex="-1">
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Редактирование данных пользователя</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        @using (Html.BeginForm("UpdateUser", "Admin", FormMethod.Post))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изменить личные данные</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="editUserId" />
+                    <div class="mb-3">
+                        <label class="form-label">Имя</label>
+                        <input type="text" name="firstName" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Фамилия</label>
+                        <input type="text" name="lastName" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <form id="editUserForm">
-                    <div class="mb-3">
-                        <label for="userName" class="form-label">Имя</label>
-                        <input type="text" class="form-control" id="userName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="userSurname" class="form-label">Фамилия</label>
-                        <input type="text" class="form-control" id="userSurname" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="userEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="userEmail" required>
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-lavender">Сохранить изменения</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        }
     </div>
 </div>
 
 <!-- Модальное окно изменения пароля -->
-<div class="modal fade" id="passwordModal" tabindex="-1">
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Изменение пароля</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="passwordForm">
+        @using (Html.BeginForm("UpdatePassword", "Admin", FormMethod.Post))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изменить пароль</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="passwordUserId" />
                     <div class="mb-3">
-                        <label for="newPassword" class="form-label">Новый пароль</label>
-                        <input type="password" class="form-control" id="newPassword" required>
+                        <label class="form-label">Новый пароль</label>
+                        <input type="password" name="newPassword" class="form-control" required />
                     </div>
-                    <div class="mb-3">
-                        <label for="confirmPassword" class="form-label">Подтвердите пароль</label>
-                        <input type="password" class="form-control" id="confirmPassword" required>
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-lavender">Изменить пароль</button>
-                    </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Изменить</button>
+                </div>
             </div>
-        </div>
+        }
+    </div>
+</div>
+
+<!-- Модальное окно - аватар -->
+<div class="modal fade" id="avatarModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("UpdateAvatar", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изменить аватар</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="avatarUserId" />
+                    <div class="mb-3">
+                        <label class="form-label">Выберите файл</label>
+                        <input type="file" name="avatar" class="form-control" accept="image/*" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Загрузить</button>
+                </div>
+            </div>
+        }
     </div>
 </div>
 
 
-
 <!-- Модальное окно подтверждения удаления -->
-<div class="modal fade" id="deleteUserModal" tabindex="-1">
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Подтверждение удаления</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        @using (Html.BeginForm("DeleteUser", "Admin", FormMethod.Post))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Удалить пользователя</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="deleteUserId" />
+                    <p>Вы уверены, что хотите удалить пользователя <strong id="deleteUserName"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <p>Вы уверены, что хотите удалить аккаунт пользователя "<span id="deleteUserName"></span>"?</p>
-                <p class="text-danger">Это действие нельзя будет отменить.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-danger" onclick="deleteUser()">Удалить</button>
-            </div>
-        </div>
+        }
     </div>
 </div>
 
@@ -276,27 +304,39 @@
 <script>
     // Функции для показа модальных окон
     function showEditUserModal(userId) {
+        document.getElementById('editUserId').value = userId;
         const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
         modal.show();
     }
 
     function showPasswordModal(userId) {
+        document.getElementById('passwordUserId').value = userId;
         const modal = new bootstrap.Modal(document.getElementById('passwordModal'));
         modal.show();
     }
 
     function showAvatarModal(userId) {
-
+        document.getElementById('avatarUserId').value = userId;
+        const modal = new bootstrap.Modal(document.getElementById('avatarModal'));
+        modal.show();
     }
 
     function showRoleModal(userId) {
+        document.getElementById('roleUserId').value = userId;
         const modal = new bootstrap.Modal(document.getElementById('roleModal'));
         modal.show();
     }
 
-    function confirmDeleteUser(userName) {
+    function confirmDeleteUser(fullName, userId) {
+        document.getElementById('deleteUserName').textContent = fullName;
+        document.getElementById('deleteUserId').value = userId;
         const modal = new bootstrap.Modal(document.getElementById('deleteUserModal'));
-        document.getElementById('deleteUserName').textContent = userName;
+        modal.show();
+    }
+
+
+    function showPasswordModal(userId) {
+        const modal = new bootstrap.Modal(document.getElementById('passwordModal'));
         modal.show();
     }
 
@@ -307,24 +347,24 @@
         bootstrap.Modal.getInstance(document.getElementById('deleteUserModal')).hide();
     }
 
-    // Обработчики форм
-    document.getElementById('editUserForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        // Код для сохранения изменений
-        bootstrap.Modal.getInstance(document.getElementById('editUserModal')).hide();
-    });
+    //// Обработчики форм
+    //document.getElementById('editUserForm').addEventListener('submit', function (e) {
+    //    e.preventDefault();
+    //    // Код для сохранения изменений
+    //    bootstrap.Modal.getInstance(document.getElementById('editUserModal')).hide();
+    //});
 
-    document.getElementById('passwordForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        // Код для изменения пароля
-        bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
-    });
+    //document.getElementById('passwordForm').addEventListener('submit', function (e) {
+    //    e.preventDefault();
+    //    // Код для изменения пароля
+    //    bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
+    //});
 
-    document.getElementById('roleForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        // Код для изменения роли
-        bootstrap.Modal.getInstance(document.getElementById('roleModal')).hide();
-    });
+    //document.getElementById('roleForm').addEventListener('submit', function (e) {
+    //    e.preventDefault();
+    //    // Код для изменения роли
+    //    bootstrap.Modal.getInstance(document.getElementById('roleModal')).hide();
+    //});
 </script>
 
 <script>

@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var user = Session["User"] as UserModel;
 }
+@using System.Collections.Generic
+@model Tweb_lavender_paradise.Domain.Models.UserModel
+@using Newtonsoft.Json
+
 
 @Styles.Render("~/bundles/PersonalAccount/css")
 
@@ -20,7 +24,8 @@
         <div class="col-md-4">
             <div class="profile-section text-center">
                 <div class="avatar-container">
-                    <img src="/api/placeholder/150/150" alt="Аватар пользователя">
+                    <img src="@Url.Content($"../src/Avatar/{user?.AvatarPath}")" alt="Аватар пользователя" class="user-avatar" />
+
                 </div>
                 <h4 class="mb-3">@($"{user?.FirstName} {user?.LastName}")</h4>
                 <span class="user-role mb-4">
@@ -89,3 +94,8 @@
         </div>
     </div>
 </div>
+
+<script>
+    const modelData = @Html.Raw(JsonConvert.SerializeObject(Model));
+    console.log("Данные модели:", modelData);
+</script>
