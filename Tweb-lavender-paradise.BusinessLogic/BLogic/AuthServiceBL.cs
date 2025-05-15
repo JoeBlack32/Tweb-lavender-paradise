@@ -37,7 +37,8 @@ namespace Tweb_lavender_paradise.BusinessLogic.BLogic
                                 Role = reader["Role"] != DBNull.Value ? reader["Role"].ToString() : "User",
                                 AvatarPath = reader["AvatarPath"] != DBNull.Value ? reader["AvatarPath"].ToString() : "",
                                 CartId = reader["CartId"] != DBNull.Value ? reader["CartId"].ToString() : "",
-                                OrderHistoryId = reader["OrderHistoryId"] != DBNull.Value ? Convert.ToInt32(reader["OrderHistoryId"]) : 0
+                                OrderHistoryId = reader["OrderHistoryId"] != DBNull.Value ? Convert.ToInt32(reader["OrderHistoryId"]) : 0,
+                                Balance = reader["Balance"] != DBNull.Value ? Convert.ToDecimal(reader["Balance"]) : 0,
                             };
                             return user;
                         }
