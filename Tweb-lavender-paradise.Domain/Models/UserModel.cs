@@ -18,5 +18,8 @@ namespace Tweb_lavender_paradise.Domain.Models
         public string Role { get; set; } // "Guest", "User", "Admin"
         public Product SingleProduct { get; set; }
         public string AvatarPath { get; set; }
+        public string CartId { get; set; }
+        public decimal Balance { get; set; }
+
     }
 }

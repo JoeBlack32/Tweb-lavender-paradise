@@ -149,7 +149,6 @@
     <Compile Include="Models\GoodsCard.cs" />
     <Compile Include="Models\UserData.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Include="obj\Release\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -186,7 +185,6 @@
     <Content Include="obj\Debug\Lavender.D481CA73.Up2Date" />
     <Content Include="obj\Debug\LavenderParadise.csproj.AssemblyReference.cache" />
     <Content Include="obj\Debug\LavenderParadise.csproj.CoreCompileInputs.cache" />
-    <Content Include="obj\Release\LavenderParadise.csproj.AssemblyReference.cache" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -244,6 +242,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="obj\Release\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
