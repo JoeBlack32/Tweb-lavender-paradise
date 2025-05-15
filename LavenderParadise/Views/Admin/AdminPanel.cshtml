@@ -97,6 +97,8 @@
                                 <button class="btn btn-lavender" onclick="showAvatarModal('@admin.Id')">Изменить аватар</button>
                                 <button class="btn special-button" onclick="showRoleModal('@admin.Id')">Настроить роль</button>
                                 <button class="btn special-button" onclick="confirmDeleteUser('@($"{admin.FirstName} {admin.LastName}")', @admin.Id)"> Удалить аккаунт </button>
+                                <button class="btn btn-warning" onclick="showBalanceModal('@admin.Id', @admin.Balance)">Изменить баланс</button>
+
                             </div>
                         </div>
                     </div>
@@ -127,6 +129,8 @@
                                 <button class="btn btn-lavender" onclick="showAvatarModal('@reg.Id')">Изменить аватар</button>
                                 <button class="btn special-button" onclick="showRoleModal('@reg.Id')">Настроить роль</button>
                                 <button class="btn special-button" onclick="confirmDeleteUser('@($"{reg.FirstName} {reg.LastName}")', @reg.Id)"> Удалить аккаунт </button>
+                                <button class="btn btn-warning" onclick="showBalanceModal('@reg.Id', @reg.Balance)">Изменить баланс</button>
+
                             </div>
                         </div>
                     </div>
@@ -157,6 +161,8 @@
                                 <button class="btn btn-lavender" onclick="showAvatarModal('@user.Id')">Изменить аватар</button>
                                 <button class="btn special-button" onclick="showRoleModal('@user.Id')">Настроить роль</button>
                                 <button class="btn special-button" onclick="confirmDeleteUser('@($"{user.FirstName} {user.LastName}")', @user.Id)"> Удалить аккаунт </button>
+                                <button class="btn btn-warning" onclick="showBalanceModal('@user.Id', @user.Balance)">Изменить баланс</button>
+
                             </div>
                         </div>
                     </div>

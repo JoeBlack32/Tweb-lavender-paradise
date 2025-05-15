@@ -20,6 +20,6 @@ namespace Tweb_lavender_paradise.Domain.Models
         public string AvatarPath { get; set; }
         public string CartId { get; set; }
         public decimal Balance { get; set; }
-
+        public int OrderHistoryId { get; set; }
     }
 }

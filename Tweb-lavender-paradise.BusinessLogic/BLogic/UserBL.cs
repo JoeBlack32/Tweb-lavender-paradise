@@ -39,5 +39,16 @@ namespace Tweb_lavender_paradise.BusinessLogic.BLogic
             }
         }
 
+        public void UpdateUserBalance(int userId, decimal newBalance)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var cmd = new SqlCommand("UPDATE Users SET Balance = @Balance WHERE Id = @UserId", connection);
+                cmd.Parameters.AddWithValue("@Balance", newBalance);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

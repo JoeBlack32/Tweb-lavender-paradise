@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tweb_lavender_paradise.BusinessLogic.BLogic;
 using Tweb_lavender_paradise.BusinessLogic.DBModel;
 using Tweb_lavender_paradise.BusinessLogic.Interfaces;
 using Tweb_lavender_paradise.Domain.Models;
@@ -14,6 +15,8 @@ namespace LavenderParadise.Controllers
     public class AdminController : BaseController
     {
         private readonly IProductService _productService;
+        private readonly IUser _UserService = new UserBL();
+
         private readonly string _connectionString = "Data Source=LocalHost;Initial Catalog=LavenderParadise;Integrated Security=True;MultipleActiveResultSets=True;App=LavenderParadise";
 
         [HttpGet]
@@ -195,5 +198,15 @@ namespace LavenderParadise.Controllers
                     }
                     return RedirectToAction("AdminPanel");
                 }
+
+            [HttpPost]
+            public ActionResult UpdateBalance(int userId, decimal newBalance)
+            {
+                _UserService.UpdateUserBalance(userId, newBalance); // или _productService
+                return RedirectToAction("AdminPanel");
             }
+
     }
+
+
+}
