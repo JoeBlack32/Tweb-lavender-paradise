@@ -4,12 +4,14 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-@model List<Tweb_lavender_paradise.Domain.Models.UserModel>
+@model Tweb_lavender_paradise.Domain.Models.AdminUserProducts
+
 @{
-    var admins = Model.Where(u => u.Role == "Admin").ToList();
-    var regulars = Model.Where(u => u.Role == "Regular").ToList();
-    var users = Model.Where(u => u.Role == "User").ToList();
+    var admins = Model.Users.Where(u => u.Role == "Admin").ToList();
+    var regulars = Model.Users.Where(u => u.Role == "Regular").ToList();
+    var users = Model.Users.Where(u => u.Role == "User").ToList();
 }
+
 
 <style>
     .role-admin {
@@ -161,9 +163,82 @@
                 </div>
             }
         </div>
+    </div>
 
+    <!-- Кнопка для вызова модального окна -->
+    <button class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#addProductModal">
+        Добавить новый товар
+    </button>
+
+    <!-- Модальное окно добавления товара -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addProductModalLabel">Добавить товар</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Products.First().GoodName)
+                            @Html.TextBox("GoodName", null, new { @class = "form-control" })
+                        </div>
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Products.First().Category)
+                            @Html.TextBox("Category", null, new { @class = "form-control" })
+                        </div>
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Products.First().GoodPrice)
+                            @Html.TextBox("GoodPrice", null, new { @class = "form-control", type = "number", step = "0.01" })
+                        </div>
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Products.First().GoodDescription)
+                            @Html.TextArea("GoodDescription", null, new { @class = "form-control" })
+                        </div>
+                        <div class="mb-3">
+                            <label for="ImgSrc">Изображение</label>
+                            <input type="file" name="ImgSrc" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Подтвердить</button>
+                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 
 </section>
+
+<!-- Модальное окно изменения баланса -->
+<div class="modal fade" id="balanceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("UpdateBalance", "Admin", FormMethod.Post))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изменить баланс</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="userId" id="balanceUserId" />
+                    <div class="mb-3">
+                        <label class="form-label">Баланс</label>
+                        <input type="number" step="0.01" min="0" class="form-control" name="newBalance" id="balanceInput" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
 
 <!-- Модальные окна остаются теми же, но обновляем окно выбора роли -->
 <div class="modal fade" id="roleModal" tabindex="-1" aria-hidden="true">
@@ -307,6 +382,13 @@
         document.getElementById('editUserId').value = userId;
         const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
         modal.show();
+    }
+
+    function showBalanceModal(userId, currentBalance) {
+        document.getElementById("balanceUserId").value = userId;
+        document.getElementById("balanceInput").value = currentBalance;
+        var balanceModal = new bootstrap.Modal(document.getElementById("balanceModal"));
+        balanceModal.show();
     }
 
     function showPasswordModal(userId) {

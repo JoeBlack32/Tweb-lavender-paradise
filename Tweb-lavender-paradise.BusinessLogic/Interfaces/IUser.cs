@@ -11,5 +11,6 @@ namespace Tweb_lavender_paradise.BusinessLogic.Interfaces
     {
         bool IsValidSession(string key);
         bool AddUser(UserDBTable data);
+        void UpdatePassword(int userId, string newPassword);
     }
 }

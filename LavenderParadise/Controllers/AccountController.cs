@@ -12,6 +12,7 @@ namespace LavenderParadise.Controllers
     public class AccountController : BaseController
     {
         private readonly AuthServiceBL _authService = new AuthServiceBL();
+        private readonly UserBL _userService = new UserBL();
 
         [HttpPost]
         public ActionResult Login(string email, string password)
@@ -34,12 +35,17 @@ namespace LavenderParadise.Controllers
         [HttpGet]
         public ActionResult PersonalAccount()
         {
-            var user = HttpContext.Session["User"];
+            var user = HttpContext.Session["User"] as UserModel;
             if (user == null)
                 return RedirectToAction("Login");
 
-            return View(user); // передаём данные пользователя
+            var productService = new ProductService();
+            var orders = productService.GetOrdersByUserId(user.Id); // Список (List<Product>, decimal)
+
+            ViewBag.OrderHistory = orders;
+            return View(user); // передаём данные пользователя в сам View
         }
+
 
         //[HttpPost]
         //public ActionResult PersonalAccount()
@@ -66,6 +72,42 @@ namespace LavenderParadise.Controllers
 
             return Json(new { success = false, message = "Пользователь с таким email уже зарегистрирован." });
         }
+
+        [HttpPost]
+        public ActionResult ChangePassword(string oldPassword, string newPassword, string confirmPassword)
+        {
+            var user = ViewBag.User as UserModel; // расширение или ручной десериализатор
+
+            if (user == null)
+            {
+                TempData["PasswordError"] = "Пользователь не авторизован.";
+                return RedirectToAction("PersonalAccount", "Account");
+            }
+
+            // Проверь старый пароль
+            if (user.PasswordHash != oldPassword)
+            {
+                TempData["PasswordError"] = "Старый пароль введен неверно.";
+                return RedirectToAction("PersonalAccount", "Account");
+            }
+
+            if (newPassword != confirmPassword)
+            {
+                TempData["PasswordError"] = "Новый пароль и его подтверждение не совпадают.";
+                return RedirectToAction("PersonalAccount", "Account");
+            }
+
+            // Обновляем пароль в базе
+            _userService.UpdatePassword(user.Id, newPassword);
+
+            // Обновляем сессию
+            user.PasswordHash = newPassword;
+            Session["User"] = user;
+
+            TempData["PasswordSuccess"] = "Пароль успешно изменён.";
+            return RedirectToAction("PersonalAccount", "Account");
+        }
+
 
     }
 }

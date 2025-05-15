@@ -1,11 +1,112 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace LavenderParadise.Views.Product
-{
-	public class Cart
-	{
-	}
+﻿@model List<Tweb_lavender_paradise.Domain.Models.Product>
+@{
+    ViewBag.Title = "Корзина";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = ViewBag.User as Tweb_lavender_paradise.Domain.Models.UserModel;
+    var cartItems = Model.GroupBy(p => p.GoodCode)
+                         .Select(g => new { Product = g.First(), Quantity = g.Count() })
+                         .ToList();
+    decimal totalSum = cartItems.Sum(ci => ci.Product.GoodPrice * ci.Quantity);
 }
+
+<div class="container mt-4">
+    <div class="user-info mb-4">
+        <h4>Здравствуйте, @user.FirstName!</h4>
+        <p>Баланс: <strong>₽ @user.Balance </strong></p>
+        <p>Сумма заказа: <strong>₽ @totalSum</strong></p>
+    </div>
+
+    <div class="row">
+        @foreach (var item in cartItems)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="product-card">
+                    @Html.Partial("_GoodsCards", item.Product)
+
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        @using (Html.BeginForm("Increase", "Product", FormMethod.Post))
+                        {
+                            @Html.Hidden("productId", item.Product.GoodCode)
+                            <button class="btn btn-outline-success" type="submit">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        }
+
+                        <span class="mx-2">x @item.Quantity</span>
+
+                        @using (Html.BeginForm("Decrease", "Product", FormMethod.Post))
+                        {
+                            @Html.Hidden("productId", item.Product.GoodCode)
+                            <button class="btn btn-outline-warning" type="submit">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        }
+
+                        @using (Html.BeginForm("Remove", "Product", FormMethod.Post))
+                        {
+                            @Html.Hidden("productId", item.Product.GoodCode)
+                            <button class="btn btn-outline-danger" type="submit">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Недостаточно средств -->
+    @*?@if (TempData["Error"]?.ToString() == "У вас недостаточно средств для этого заказа!")*@
+    @*{
+        <script>
+            $(document).ready(function () {
+                $('#notEnoughFundsModal').modal('show');
+            });
+        </script>
+    }*@
+
+    @if (TempData["OrderError"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["OrderError"]
+        </div>
+    }
+
+
+    <div class="modal fade" id="notEnoughFundsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h5 class="modal-title">Ошибка</h5></div>
+                <div class="modal-body">У вас недостаточно средств для этого заказа!</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ок</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подтвердить оплату -->
+    <form method="post" action="/Product/ConfirmOrder">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmModal">
+            Оплатить
+        </button>
+
+        <div class="modal fade" id="confirmModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"><h5 class="modal-title">Подтверждение</h5></div>
+                    <div class="modal-body">Вы действительно хотите оплатить заказ?</div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Подтвердить</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="text-center mt-4">
+        <button class="btn btn-lg btn-primary" disabled>Оплатить (в разработке)</button>
+    </div>
+</div>

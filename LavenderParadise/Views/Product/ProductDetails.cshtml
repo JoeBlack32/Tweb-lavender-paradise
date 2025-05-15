@@ -1,9 +1,9 @@
 ﻿@{
-    ViewBag.Title = "ProductDetails";
+    ViewBag.Title = "Детали продукта";
 }
 
 @using System.Collections.Generic
-@model Tweb_lavender_paradise.Domain.Models.UserModel
+@model Tweb_lavender_paradise.Domain.Models.Product
 @using Newtonsoft.Json
 
 <section class="py-5 bg-light mt-5">
@@ -12,18 +12,23 @@
             <h3 class="category-title">Описание Продукта</h3>
             <div class="row">
                 <div class="product-card">
-                    <img src="@Model.SingleProduct.ImgSrc" class="img-fluid" alt="@Model.SingleProduct.GoodName">
+                    <img src="@Model.ImgSrc" class="img-fluid" alt="@Model.GoodName">
                     <div class="card-body">
-                        <h5 class="card-title">@Model.SingleProduct.GoodName</h5>
-                        <p class="card-text">@Model.SingleProduct.GoodDescription</p>
+                        <h5 class="card-title">@Model.GoodName</h5>
+                        <p class="card-text">@Model.GoodDescription</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="price-tag">₽ @Model.SingleProduct.GoodPrice</span>
+                            <span class="price-tag">₽ @Model.GoodPrice</span>
                         </div>
                     </div>
                     @if (ViewBag.UserRole != "Guest")
                     {
-                        <button class="btn btn-primary">Добавить в корзину</button>
+                        using (Html.BeginForm("AddToCart", "Product", FormMethod.Post))
+                        {
+                            <input type="hidden" name="productId" value="@Model.GoodCode" />
+                            <button class="btn btn-primary" type="submit">Добавить в корзину</button>
+                        }
                     }
+
                 </div>
             </div>
         </div>

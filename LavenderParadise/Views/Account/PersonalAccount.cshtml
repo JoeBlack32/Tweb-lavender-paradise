@@ -38,60 +38,107 @@
                     </div>
                     <div class="user-info-item">
                         <i class="fas fa-key me-2"></i>
-                        <a href="#" class="text-decoration-none">Изменить пароль</a>
+                        <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Изменить пароль</a>
                     </div>
+
                 </div>
             </div>
 
             <!-- Баланс -->
             <div class="balance-card">
                 <h5>Баланс счета</h5>
-                <h3 class="mb-0">₽ 5,400</h3>
-                <small>Бонусные баллы: 240</small>
+                <h3 class="mb-0">₽ @($"{user?.Balance}")</h3>
+                @*<small>Бонусные баллы: 240</small>*@
             </div>
         </div>
 
         <!-- История заказов -->
-        <div class="col-md-8">
-            <h4 class="mb-4">История заказов</h4>
+        @if (orderHistory != null && orderHistory.Any())
+        {
+            foreach (var order in orderHistory)
+            {
+                var goods = order.Goods.Split(','); // Пример: "{1:2},{3:1}" -> массив
+                decimal totalSum = 0;
 
-            <!-- Заказ -->
-            <div class="order-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0">Заказ #1234</h6>
-                    <span class="badge bg-success">Доставлен</span>
+                <div class="order-card mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">Заказ #@order.Id</h6>
+                        <span class="badge bg-success">Оформлен</span>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-8">
+                            @foreach (var pair in goods)
+                            {
+                                var cleanPair = pair.Trim('{', '}');
+                                var parts = cleanPair.Split(':');
+                                if (parts.Length == 2 &&
+                                    int.TryParse(parts[0], out int productId) &&
+                                    int.TryParse(parts[1], out int quantity))
+                                {
+                                    var product = productService.GetProductById(productId);
+                                    var subtotal = product.GoodPrice * quantity;
+                                    totalSum += subtotal;
+
+                                    <p class="mb-1">@product.GoodName (@quantity шт)</p>
+                                    <small class="text-muted">@product.GoodDescription</small>
+                                }
+                            }
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <p class="mb-1">Сумма: ₽ @totalSum</p>
+                            <small class="text-muted">@order.CheckOut</small>
+                        </div>
+                    </div>
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-8">
-                        <p class="mb-1">Эфирное масло лаванды (2 шт)</p>
-                        <p class="mb-1">Спрей для подушки (1 шт)</p>
+            }
+        }
+        else
+        {
+            <p>У вас пока нет заказов.</p>
+        }
+    </div>
+</div>
+
+<!-- Модальное окно изменения пароля -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изменить пароль</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    @if (TempData["PasswordError"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["PasswordError"]</div>
+                    }
+                    @if (TempData["PasswordSuccess"] != null)
+                    {
+                        <div class="alert alert-success">@TempData["PasswordSuccess"]</div>
+                    }
+
+                    <div class="mb-3">
+                        <label class="form-label">Старый пароль</label>
+                        <input type="password" name="oldPassword" class="form-control" required />
                     </div>
-                    <div class="col-md-4 text-end">
-                        <p class="mb-1">Сумма: ₽ 3,290</p>
-                        <small class="text-muted">15.01.2025</small>
+                    <div class="mb-3">
+                        <label class="form-label">Новый пароль</label>
+                        <input type="password" name="newPassword" class="form-control" required />
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">Повторите новый пароль</label>
+                        <input type="password" name="confirmPassword" class="form-control" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
                 </div>
             </div>
-
-            <!-- Заказ -->
-            <div class="order-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0">Заказ #1189</h6>
-                    <span class="badge bg-success">Доставлен</span>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-8">
-                        <p class="mb-1">Массажное масло (1 шт)</p>
-                    </div>
-                    <div class="col-md-4 text-end">
-                        <p class="mb-1">Сумма: ₽ 1,500</p>
-                        <small class="text-muted">03.01.2025</small>
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 </div>
 
