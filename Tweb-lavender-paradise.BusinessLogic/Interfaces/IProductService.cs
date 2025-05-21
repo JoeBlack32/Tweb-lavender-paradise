@@ -17,5 +17,6 @@ namespace Tweb_lavender_paradise.BusinessLogic.Interfaces
         bool DecreaseProductQuantityInCart(int cartId, int productId);
         bool DeleteProductFromCart(int cartId, int productId);
         bool ConfirmOrder(UserModel user, out string errorMessage);
+        List<string> GetAllCategories();
     }
 }

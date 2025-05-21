@@ -44,6 +44,28 @@ namespace Tweb_lavender_paradise.BusinessLogic.BLogic
             return products;
         }
 
+        public List<string> GetAllCategories()
+        {
+            var categories = new List<string>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var command = new SqlCommand("SELECT Name FROM Categories", connection);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        categories.Add(reader["Name"].ToString());
+                    }
+                }
+            }
+
+            return categories;
+        }
+
+
         public List<Product> GetCartProductsByUserId(int userId)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -481,6 +503,16 @@ namespace Tweb_lavender_paradise.BusinessLogic.BLogic
     return result;
 }
 
-
+        public void UpdateUserBalance(int userId, decimal newBalance)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var cmd = new SqlCommand("UPDATE Users SET Balance = @Balance WHERE Id = @UserId", connection);
+                cmd.Parameters.AddWithValue("@Balance", newBalance);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
