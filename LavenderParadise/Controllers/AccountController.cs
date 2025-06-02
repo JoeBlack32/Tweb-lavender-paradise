@@ -5,14 +5,22 @@ using System.Web;
 using System.Web.Mvc;
 using Tweb_lavender_paradise.Domain.Models;
 using Tweb_lavender_paradise.BusinessLogic.BLogic;
+using System.Data.SqlClient;
+using Tweb_lavender_paradise.BusinessLogic.Interfaces;
+using System.Security.Cryptography;
+using Microsoft.Ajax.Utilities;
+using Tweb_lavender_paradise.BusinessLogic;
 
 
 namespace LavenderParadise.Controllers
 {
     public class AccountController : BaseController
     {
+
         private readonly AuthServiceBL _authService = new AuthServiceBL();
         private readonly UserBL _userService = new UserBL();
+        private readonly ProductServiceBL _productService = new ProductServiceBL();
+        private readonly string _connectionString = "Data Source=LocalHost;Initial Catalog=LavenderParadise;Integrated Security=True;MultipleActiveResultSets=True;App=LavenderParadise";
 
         [HttpPost]
         public ActionResult Login(string email, string password)
@@ -29,21 +37,51 @@ namespace LavenderParadise.Controllers
             }
 
             ViewBag.ErrorMessage = "Неверный email или пароль.";
-            return View("Avtorization"); // Перерисовываем страницу с ошибкой
+            return RedirectToAction("Avtorization", "Home"); // Перерисовываем страницу с ошибкой
         }
 
         [HttpGet]
         public ActionResult PersonalAccount()
         {
-            var user = HttpContext.Session["User"] as UserModel;
-            if (user == null)
+            var sessionUser = (UserModel)Session["User"];
+            if (sessionUser == null)
                 return RedirectToAction("Login");
 
-            var productService = new ProductService();
-            var orders = productService.GetOrdersByUserId(user.Id); // Список (List<Product>, decimal)
+            // Обновление данных пользователя из базы
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var command = new SqlCommand("SELECT * FROM Users WHERE Id = @Id", connection);
+                command.Parameters.AddWithValue("@Id", sessionUser.Id);
 
-            ViewBag.OrderHistory = orders;
-            return View(user); // передаём данные пользователя в сам View
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        var freshUser = new UserModel
+                        {
+                            Id = (int)reader["Id"],
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Role = reader["Role"].ToString(),
+                            Balance = Convert.ToDecimal(reader["Balance"]),
+                            CartId = reader["CartId"]?.ToString(),
+                            AvatarPath = reader["AvatarPath"]?.ToString(),
+                            OrderHistoryId = (int)reader["Id"]
+                        };
+
+                        Session["User"] = freshUser;
+                        sessionUser = freshUser;
+                    }
+                }
+            }
+
+            //// Получаем актуальные заказы
+            //var orders = _productService.GetOrdersByUserId(sessionUser.Id);
+            //ViewBag.OrderHistory = orders;
+
+            return View(sessionUser);
         }
 
 
@@ -76,7 +114,7 @@ namespace LavenderParadise.Controllers
         [HttpPost]
         public ActionResult ChangePassword(string oldPassword, string newPassword, string confirmPassword)
         {
-            var user = ViewBag.User as UserModel; // расширение или ручной десериализатор
+            var user = ViewBag.User as UserModel;
 
             if (user == null)
             {
@@ -84,8 +122,8 @@ namespace LavenderParadise.Controllers
                 return RedirectToAction("PersonalAccount", "Account");
             }
 
-            // Проверь старый пароль
-            if (user.PasswordHash != oldPassword)
+            // Проверяем старый пароль с помощью UserBL
+            if (!_userService.VerifyPassword(oldPassword, user.PasswordHash))
             {
                 TempData["PasswordError"] = "Старый пароль введен неверно.";
                 return RedirectToAction("PersonalAccount", "Account");
@@ -97,17 +135,16 @@ namespace LavenderParadise.Controllers
                 return RedirectToAction("PersonalAccount", "Account");
             }
 
-            // Обновляем пароль в базе
+            // Обновляем пароль в базе (захешируется внутри)
             _userService.UpdatePassword(user.Id, newPassword);
 
-            // Обновляем сессию
-            user.PasswordHash = newPassword;
+            // Обновляем сессию (новый хеш)
+            user.PasswordHash = _userService.HashPassword(newPassword);
             Session["User"] = user;
 
             TempData["PasswordSuccess"] = "Пароль успешно изменён.";
             return RedirectToAction("PersonalAccount", "Account");
         }
-
 
     }
 }

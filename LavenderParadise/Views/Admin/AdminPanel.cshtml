@@ -192,9 +192,10 @@
                             @Html.TextBox("GoodName", null, new { @class = "form-control" })
                         </div>
                         <div class="mb-3">
-                            @Html.LabelFor(m => m.Products.First().Category)
-                            @Html.TextBox("Category", null, new { @class = "form-control" })
+                            @Html.Label("Category", "Категория")
+                            @Html.DropDownList("Category", new SelectList(Model.Categories), "Выберите категорию", new { @class = "form-control" })
                         </div>
+
                         <div class="mb-3">
                             @Html.LabelFor(m => m.Products.First().GoodPrice)
                             @Html.TextBox("GoodPrice", null, new { @class = "form-control", type = "number", step = "0.01" })
@@ -400,6 +401,7 @@
     function showPasswordModal(userId) {
         document.getElementById('passwordUserId').value = userId;
         const modal = new bootstrap.Modal(document.getElementById('passwordModal'));
+        console.log("userId:", userId);
         modal.show();
     }
 
@@ -422,18 +424,12 @@
         modal.show();
     }
 
-
-    function showPasswordModal(userId) {
-        const modal = new bootstrap.Modal(document.getElementById('passwordModal'));
-        modal.show();
-    }
-
-    function deleteUser() {
-        const userName = document.getElementById('deleteUserName').textContent;
-        console.log('Удаление пользователя:', userName);
-        // Здесь будет код для удаления пользователя
-        bootstrap.Modal.getInstance(document.getElementById('deleteUserModal')).hide();
-    }
+    //function deleteUser() {
+    //    const userName = document.getElementById('deleteUserName').textContent;
+    //    console.log('Удаление пользователя:', userName);
+    //    // Здесь будет код для удаления пользователя
+    //    bootstrap.Modal.getInstance(document.getElementById('deleteUserModal')).hide();
+    //}
 
     //// Обработчики форм
     //document.getElementById('editUserForm').addEventListener('submit', function (e) {

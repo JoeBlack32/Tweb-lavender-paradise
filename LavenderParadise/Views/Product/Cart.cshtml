@@ -87,9 +87,9 @@
 
     <!-- Подтвердить оплату -->
     <form method="post" action="/Product/ConfirmOrder">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmModal">
+        @*<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmModal">
             Оплатить
-        </button>
+        </button>*@
 
         <div class="modal fade" id="confirmModal" tabindex="-1">
             <div class="modal-dialog">
@@ -107,6 +107,6 @@
 
 
     <div class="text-center mt-4">
-        <button class="btn btn-lg btn-primary" disabled>Оплатить (в разработке)</button>
+        <button type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal" >Оплатить</button>
     </div>
 </div>

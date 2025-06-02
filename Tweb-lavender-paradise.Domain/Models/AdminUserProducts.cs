@@ -10,5 +10,7 @@ namespace Tweb_lavender_paradise.Domain.Models
     {
         public List<UserModel> Users { get; set; }
         public List<Product> Products { get; set; }
+        public List<string> Categories { get; set; }
     }
+
 }

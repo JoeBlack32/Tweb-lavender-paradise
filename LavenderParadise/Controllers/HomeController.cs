@@ -1,4 +1,4 @@
-﻿using LavenderParadise.Models;
+﻿using Tweb_lavender_paradise.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -17,15 +17,15 @@ namespace LavenderParadise.Controllers
 {
     public class HomeController : BaseController
     {
+        private readonly IProductService _productService;
         public IUser _user;
         public HomeController()
         {
             var bl = new BusinessLogic();
             _user = bl.GetUserBL();
-
+            _productService = new ProductServiceBL();
         }
 
-        private readonly IProductService _productService;
         private readonly string _connectionString = "Data Source=LocalHost;Initial Catalog=LavenderParadise;Integrated Security=True;MultipleActiveResultSets=True;App=LavenderParadise";
 
         public ActionResult Index()
@@ -35,34 +35,23 @@ namespace LavenderParadise.Controllers
 
         public ActionResult Catalog()
         {
-            var goods = new List<Product>();
+            var middleProducts = _productService.GetAllProducts();
 
-            using (var connection = new SqlConnection(_connectionString))
+            var viewProducts = new List<ProductView>();
+            foreach (var p in middleProducts)
             {
-                connection.Open();
-
-                var command = new SqlCommand("SELECT GoodName, GoodCode, GoodDescription, GoodPrice, ImgSrc, Category FROM Product", connection);
-
-                using (var reader = command.ExecuteReader())
+                viewProducts.Add(new ProductView
                 {
-                    while (reader.Read())
-                    {
-                        var product = new Product
-                        {
-                            GoodName = reader["GoodName"]?.ToString(),
-                            GoodCode = reader["GoodCode"] != DBNull.Value ? Convert.ToInt32(reader["GoodCode"]) : 0,
-                            GoodDescription = reader["GoodDescription"]?.ToString(),
-                            GoodPrice = reader["GoodPrice"] != DBNull.Value ? Convert.ToDecimal(reader["GoodPrice"]) : 0,
-                            ImgSrc = reader["ImgSrc"]?.ToString(),
-                            Category = reader["Category"]?.ToString()
-                        };
-
-                        goods.Add(product);
-                    }
-                }
+                    GoodCode = p.GoodCode,
+                    GoodName = p.GoodName,
+                    GoodDescription = p.GoodDescription,
+                    GoodPrice = p.GoodPrice,
+                    ImgSrc = p.ImgSrc,
+                    Category = p.Category
+                });
             }
 
-            return View(goods);
+            return View(viewProducts);
         }
 
 

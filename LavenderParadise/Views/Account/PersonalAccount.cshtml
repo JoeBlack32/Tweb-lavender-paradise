@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "PersonalAccount";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var user = Session["User"] as UserModel;
+    var orderHistory = ViewBag.OrderHistory as List<(List<Product> Products, decimal Checkout)>;
 }
 @using System.Collections.Generic
 @model Tweb_lavender_paradise.Domain.Models.UserModel
@@ -12,7 +12,7 @@
 
 @Styles.Render("~/bundles/PersonalAccount/css")
 
-@if (user == null)
+@if (Model == null)
 {
     <text>Ошибка: пользователь не авторизован.</text>
     return;
@@ -24,17 +24,17 @@
         <div class="col-md-4">
             <div class="profile-section text-center">
                 <div class="avatar-container">
-                    <img src="@Url.Content($"../src/Avatar/{user?.AvatarPath}")" alt="Аватар пользователя" class="user-avatar" />
+                    <img src="@Url.Content($"../src/Avatars/{Model?.AvatarPath}")" alt="Аватар пользователя" class="user-avatar" />
 
                 </div>
-                <h4 class="mb-3">@($"{user?.FirstName} {user?.LastName}")</h4>
+                <h4 class="mb-3">@($"{Model?.FirstName} {Model?.LastName}")</h4>
                 <span class="user-role mb-4">
-                    Ваша роль - @($"{user?.Role}")
+                    Ваша роль - @($"{Model?.Role}")
                 </span>
                 <div class="user-info mt-4">
                     <div class="user-info-item">
                         <i class="fas fa-envelope me-2"></i>
-                        <span>@($"{user?.Email}")</span>
+                        <span>@($"{Model?.Email}")</span>
                     </div>
                     <div class="user-info-item">
                         <i class="fas fa-key me-2"></i>
@@ -47,56 +47,50 @@
             <!-- Баланс -->
             <div class="balance-card">
                 <h5>Баланс счета</h5>
-                <h3 class="mb-0">₽ @($"{user?.Balance}")</h3>
+                <h3 class="mb-0">₽ @($"{Model?.Balance}")</h3>
                 @*<small>Бонусные баллы: 240</small>*@
             </div>
         </div>
 
         <!-- История заказов -->
-        @*@if (orderHistory != null && orderHistory.Any())
+        @if (orderHistory != null && orderHistory.Any())
         {
+            int orderNumber = 1;
             foreach (var order in orderHistory)
             {
-                var goods = order.Goods.Split(','); // Пример: "{1:2},{3:1}" -> массив
-                decimal totalSum = 0;
+                var products = order.Products;
+                var checkout = order.Checkout;
 
                 <div class="order-card mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h6 class="mb-0">Заказ #@order.Id</h6>
+                        <h6 class="mb-0">Заказ #@orderNumber</h6>
                         <span class="badge bg-success">Оформлен</span>
                     </div>
                     <hr />
                     <div class="row">
                         <div class="col-md-8">
-                            @foreach (var pair in goods)
+                            @foreach (var product in products.GroupBy(p => p.GoodCode))
                             {
-                                var cleanPair = pair.Trim('{', '}');
-                                var parts = cleanPair.Split(':');
-                                if (parts.Length == 2 &&
-                                    int.TryParse(parts[0], out int productId) &&
-                                    int.TryParse(parts[1], out int quantity))
-                                {
-                                    var product = productService.GetProductById(productId);
-                                    var subtotal = product.GoodPrice * quantity;
-                                    totalSum += subtotal;
+                                var productInfo = product.First();
+                                int quantity = product.Count();
 
-                                    <p class="mb-1">@product.GoodName (@quantity шт)</p>
-                                    <small class="text-muted">@product.GoodDescription</small>
-                                }
+                                <p class="mb-1">@productInfo.GoodName (@quantity шт)</p>
+                                <small class="text-muted">@productInfo.GoodDescription</small>
                             }
                         </div>
                         <div class="col-md-4 text-end">
-                            <p class="mb-1">Сумма: ₽ @totalSum</p>
-                            <small class="text-muted">@order.CheckOut</small>
+                            <p class="mb-1">Сумма: ₽ @checkout</p>
                         </div>
                     </div>
                 </div>
+
+                orderNumber++;
             }
         }
         else
         {
             <p>У вас пока нет заказов.</p>
-        }*@
+        }
     </div>
 </div>
 

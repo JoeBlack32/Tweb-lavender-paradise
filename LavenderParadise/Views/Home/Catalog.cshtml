@@ -3,7 +3,7 @@
 }
 
 @using System.Collections.Generic
-@model List<Tweb_lavender_paradise.Domain.Models.Product>
+@model List<Tweb_lavender_paradise.ViewModels.ProductView>
 
 <style>
 
@@ -36,32 +36,36 @@
         <div class="category-section">
             <h3 class="category-title">Ароматерапия и масла</h3>
             <div class="row">
-                @foreach (var item in Model){
-                if (item.Category == "Aromatherapy"){
-                    using(Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new {autocomplete = "off"}))
+                @foreach (var item in Model)
+                {
+                    if (item.Category == 1)
                     {
-                    <div class="col-md-4 mb-4">
-                        <div class="product-card">
-                            @Html.Partial("_GoodsCards", item)
-                            <input type="hidden" name="btn" value="@item.GoodCode" />
+                        using (Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new { autocomplete = "off" }))
+                        {
+                            <div class="col-md-4 mb-4">
+                                <div class="product-card">
+                                    @Html.Partial("_GoodsCards", item)
+                                    <input type="hidden" name="btn" value="@item.GoodCode" />
 
-                            <button class="btn btn-lavender" type="submit" name="btn" value="@item.GoodCode">
-                                <i class="fas fa-shopping-cart me-2"></i> Подробнее
-                            </button>
-                        </div>
-                    </div>
+                                    <button class="btn btn-lavender" type="submit" name="btn" value="@item.GoodCode">
+                                        <i class="fas fa-shopping-cart me-2"></i> Подробнее
+                                    </button>
+                                </div>
+                            </div>
+                        }
                     }
                 }
-            }
             </div>
         </div>
 
         <div class="category-section">
             <h3 class="category-title">Уход за телом</h3>
             <div class="row">
-                @foreach (var item in Model){
-                    if (item.Category == "Body Care"){
-                        using(Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new {autocomplete = "off"}))
+                @foreach (var item in Model)
+                {
+                    if (item.Category == 2)
+                    {
+                        using (Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new { autocomplete = "off" }))
                         {
                             <div class="col-md-4 mb-4">
                                 <div class="product-card">
@@ -82,9 +86,11 @@
         <div class="category-section">
             <h3 class="category-title">Для дома и отдыха</h3>
             <div class="row">
-                @foreach (var item in Model){
-                    if (item.Category == "For Home and Rest"){
-                        using(Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new {autocomplete = "off"}))
+                @foreach (var item in Model)
+                {
+                    if (item.Category == 3)
+                    {
+                        using (Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new { autocomplete = "off" }))
                         {
                             <div class="col-md-4 mb-4">
                                 <div class="product-card">
@@ -105,9 +111,11 @@
         <div class="category-section">
             <h3 class="category-title">Продукты питания</h3>
             <div class="row">
-                @foreach (var item in Model){
-                    if (item.Category == "Products for Consuming"){
-                        using(Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new {autocomplete = "off"}))
+                @foreach (var item in Model)
+                {
+                    if (item.Category == 4)
+                    {
+                        using (Html.BeginForm("ProductDetails", "Product", FormMethod.Post, new { autocomplete = "off" }))
                         {
                             <div class="col-md-4 mb-4">
                                 <div class="product-card">
